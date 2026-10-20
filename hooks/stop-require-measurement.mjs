@@ -10,8 +10,10 @@
  * skipped - say so and block.
  *
  * Deliberate softenings:
- *   - stop_hook_active is checked first. It is true when Claude Code is already
- *     continuing because of a Stop hook, and blocking again there never ends.
+ *   - stop_hook_active always lets the turn end. It is true when Claude Code is
+ *     already continuing because of a Stop hook, and blocking again there never
+ *     ends. The state is still computed first so the observability log records
+ *     whether the agent finished with pages unmeasured.
  *   - Only pages (.html/.htm) are required. A stylesheet or a component source
  *     cannot be rendered by itself: verify_states on a .css file checks zero
  *     elements and passes, so demanding a receipt for one adds friction and
@@ -30,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { liveReceiptsFor } from '../scripts/gate.mjs';
 import { ledgerFile, insideProject, projectDir } from './_ledger.mjs';
 import { browserPresent } from './_browser.mjs';
+import { recordEvent } from './_events.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PAGES = new Set(['.html', '.htm']);
@@ -37,14 +40,24 @@ const PAGES = new Set(['.html', '.htm']);
 let payload = {};
 try { payload = JSON.parse(readFileSync(0, 'utf8') || '{}'); } catch { payload = {}; }
 
-// Already continuing because of a Stop hook: let it through or it never ends.
-if (payload.stop_hook_active) process.exit(0);
-
 /* The same path the writer builds, imported rather than rebuilt: two copies of
    a path formula drift, and when they do this hook silently stops seeing any
    edits at all - which looks exactly like a clean session. */
 const ledger = ledgerFile(payload);
 if (!ledger || !existsSync(ledger)) process.exit(0);
+
+// What the observability log keeps about the end of a turn. Pages only, with
+// their state, so a report can say "edited 3, measured 2" without re-deriving it.
+const stopEvent = (outcome, rows = []) => recordEvent(payload, 'stop', {
+  outcome, reentry: Boolean(payload.stop_hook_active),
+  pages: rows.map(({ p, live, passing }) => ({
+    path: p,
+    state: passing.length ? 'passing' : live.length ? 'failing' : 'not_measured',
+    ...(live.length && !passing.length
+      ? { gate: live[live.length - 1].gate, exit: live[live.length - 1].exit, skipped: Boolean(live[live.length - 1].skipped) }
+      : {}),
+  })),
+});
 
 const edited = [...new Set(
   readFileSync(ledger, 'utf8').split('\n').filter(Boolean)
@@ -54,7 +67,7 @@ const edited = [...new Set(
     // repository's edits must never block you here.
     .filter(p => PAGES.has(extname(p).toLowerCase()) && insideProject(p) && existsSync(p)))];
 
-if (!edited.length) process.exit(0);
+if (!edited.length) { stopEvent('no_pages'); process.exit(0); }
 
 const status = edited.map(p => {
   const live = liveReceiptsFor(p);
@@ -62,7 +75,13 @@ const status = edited.map(p => {
   return { p, live, passing };
 });
 const open = status.filter(s => !s.passing.length);
-if (!open.length) process.exit(0);
+
+// Already continuing because of a Stop hook: let it through or it never ends.
+// Recorded first, because this is the one case where an agent can finish with
+// pages still unmeasured, and the log is where that becomes visible.
+if (payload.stop_hook_active) { stopEvent(open.length ? 'released' : 'pass', status); process.exit(0); }
+
+if (!open.length) { stopEvent('pass', status); process.exit(0); }
 
 const shown = p => relative(projectDir(), p) || p;
 const list = open.map(({ p, live }) => {
@@ -77,6 +96,7 @@ if (!browserPresent()) {
     + `here - this machine has no browser for the render gates:\n${list}\n\n`
     + `Not a blocker, but your answer must say the result is UNMEASURED rather than `
     + `implying it passed. Installing one: npx playwright install chrome`);
+  stopEvent('warn_no_browser', status);
   process.exit(0);
 }
 
@@ -93,4 +113,5 @@ console.error(
   + `  ${data}node "${gate}" verify_states.mjs "${first}"\n\n`
   + `A receipt counts only while the page is unchanged since it was measured, and only `
   + `if the gate passed. A failing gate means fix the page, then measure again.`);
+stopEvent('block', status);
 process.exit(2);

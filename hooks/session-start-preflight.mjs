@@ -15,8 +15,12 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { removeLegacyLedgers } from './_ledger.mjs';
 import { browserPresent } from './_browser.mjs';
+import { recordEvent, pruneEvents, kitVersion } from './_events.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+let payload = {};
+try { payload = JSON.parse(readFileSync(0, 'utf8') || '{}'); } catch { payload = {}; }
 
 function playwrightPresent() {
   for (const p of [join(ROOT, 'node_modules/playwright/package.json'),
@@ -47,6 +51,11 @@ lines.push('  validate_theme_refs, validate_tokens, validate_contrast.');
 
 // Pre-2.9.7 ledgers were shared across sessions and projects; clear them.
 removeLegacyLedgers();
+
+pruneEvents();
+recordEvent(payload, 'session_start', {
+  source: payload.source || null, version: kitVersion(), playwright: pw, browser: br,
+});
 
 console.log(lines.join('\n'));
 process.exit(0);

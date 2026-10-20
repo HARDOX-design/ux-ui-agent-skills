@@ -10,6 +10,33 @@ with auto-generated notes instead.
 
 ---
 
+### `v2.10.0`
+
+**Agent observability: did the agent follow the rules?** The hooks now keep a
+local record of what they saw, and a report turns it into one verdict per
+session from three rules that can be counted: every page edited had a passing
+gate before the session ended, no fast-gate finding was left on a file's latest
+version, and the agent never finished while the Stop hook still had pages open.
+
+- `hooks/_events.mjs`: one JSON line per session start, per UI edit (with each
+  fast gate's result) and per end of turn (each page's state, and whether the
+  Stop hook passed, blocked, warned, or let the agent go). Keyed by the session
+  id from the hook payload, like the ledger; no id, no event. Local only, files
+  older than 30 days are deleted at session start, `DS_OBSERVE=0` turns it off,
+  and a write that fails never changes what a hook decides.
+- The Stop hook records the turn Claude Code lets through after a block
+  (`stop_hook_active`). That is the one way an agent can finish with pages
+  unmeasured, and it is now visible instead of silent. The hook still never
+  blocks that turn.
+- `scripts/observe.mjs`, also `npx ux-ui-skills observe` and `/observe`: a
+  summary of recent sessions, `--last` / `--session <id>` for a timeline,
+  `--project`, `--days`, `--json`, and `--html` for a dashboard page built on
+  the kit's theme. The page passes the kit's render gates in light and dark.
+- Ten tests drive the real hooks to produce each verdict, including a session
+  that quit while blocked and one that left a finding open.
+
+---
+
 ### `v2.9.10`
 
 **Use this release, not 2.9.9.** The 2.9.9 package on npm was cut from a
