@@ -130,7 +130,7 @@ jobs:
         # the same gates the hand-written HTML gets, pointed at what the components
         # actually produce.
         run: |
-          for page in dashboard settings button-variants modal; do
+          for page in dashboard settings settings-confirm button-variants modal; do
             f="dist/framework-render/$page.html"
             node scripts/measure_render.mjs "$f"
             node scripts/measure_render.mjs --dark "$f"

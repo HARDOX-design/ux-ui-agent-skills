@@ -126,10 +126,10 @@ node ${CLAUDE_SKILL_DIR}/../../../scripts/accuracy_report.mjs
 Report the real `N/N` line. For a single file, at minimum:
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_states.mjs <file> [--dark]
-node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_responsive.mjs <file> --scale=1.25
-node ${CLAUDE_SKILL_DIR}/../../../scripts/slop_tells.mjs --strict <file>
-node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs --strict <file>
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_states.mjs <file> [--dark]
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file> --scale=1.25
+DS_REQUIRE_BROWSER=1 node ${CLAUDE_SKILL_DIR}/../../../scripts/slop_tells.mjs --strict <file>
+DS_REQUIRE_BROWSER=1 node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs --strict <file>
 ```
 
 A render gate with no browser prints SKIPPED and exits 0. That is not a pass.

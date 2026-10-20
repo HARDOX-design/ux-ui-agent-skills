@@ -24,7 +24,7 @@ A comprehensive kit of structured instructions, design tokens, runnable skills, 
 <br>
 <br>
 
-[![Version](https://img.shields.io/badge/version-2.10.0-6366f1?style=for-the-badge)](https://github.com/plugin87/ux-ui-agent-skills/releases)
+[![Version](https://img.shields.io/badge/version-2.10.1-6366f1?style=for-the-badge)](https://github.com/plugin87/ux-ui-agent-skills/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-22c55e?style=for-the-badge)](#license)
 [![WCAG 2.2 AA→AAA](https://img.shields.io/badge/WCAG-2.2_AA→AAA-a855f7?style=for-the-badge)](#-accessibility-standards)
 
@@ -46,7 +46,7 @@ A comprehensive kit of structured instructions, design tokens, runnable skills, 
 
 </div>
 
-**Current release [`v2.10.0`](https://github.com/plugin87/ux-ui-agent-skills/releases)** · [Changelog](CHANGELOG.md) · No build tools, dependencies, or runtime — a pure instruction and knowledge layer for AI agents.
+**Current release [`v2.10.1`](https://github.com/plugin87/ux-ui-agent-skills/releases)** · [Changelog](CHANGELOG.md) · No build tools, dependencies, or runtime — a pure instruction and knowledge layer for AI agents.
 
 ---
 
@@ -269,6 +269,14 @@ claude plugin uninstall ux-ui-agent-skills
 claude plugin marketplace remove ux-ui-agent-skills
 ```
 
+`uninstall` also deletes the plugin's data folder, which holds the gate
+receipts and the `/observe` history.
+
+**34 of the gates open a real browser.** They use the Chrome installed on the
+machine, or the one `npx playwright install chrome` downloads. Without either
+they cannot measure: run through `scripts/gate.mjs`, as the skills do, they fail
+with `REQUIRED, FAILING` instead of passing on nothing.
+
 ### See it first, install nothing
 
 ```bash
@@ -357,9 +365,11 @@ The kit ships **52 objective gates** behind one command:
 node scripts/accuracy_report.mjs     # 52/52 or it fails — no partial credit
 ```
 
-**34 of them open a real browser, so they need one installed.** Playwright is not
-pulled in by `/plugin install` or `npx ux-ui-agent-skills init`, so run this once
-in the kit directory before expecting a full score:
+**34 of them open a real browser, so they need one installed.** `npx
+ux-ui-agent-skills init` does not install Playwright. Whether `/plugin install`
+does depends on the Claude Code version: 2.1.301 installed the kit's npm
+dependencies, Playwright included, into the plugin folder. Neither installs the
+browser itself. In a clone, run this once before expecting a full score:
 
 ```bash
 npm install                          # playwright
@@ -368,8 +378,9 @@ npx playwright install chrome        # real Chrome: six gates require the channe
 
 Without it those 34 report `REQUIRED, FAILING` under `accuracy_report.mjs`, which
 is the honest answer. Run individually they print `SKIPPED` and **exit 0** — so
-prefix any single render gate with `DS_REQUIRE_BROWSER=1` if you are reading its
-exit code, rather than reading silence as green.
+run a single render gate through `scripts/gate.mjs` (or prefix it with
+`DS_REQUIRE_BROWSER=1`) if you are reading its exit code, rather than reading
+silence as green. Every skill already does.
 
 Token validity, WCAG contrast on a real headless render in light *and* dark, every
 element in default/hover/focus, axe roles and names, focus traps, RTL, responsive

@@ -31,7 +31,15 @@ const open = (argv.find(a => a.startsWith('--open=')) || '').split('=')[1];
 const dialogSel = (argv.find(a => a.startsWith('--dialog=')) || '').split('=')[1]
   || '[role="dialog"],dialog[open]';
 const dark = argv.includes('--dark');
-if (!file || !open) { console.log('usage: node scripts/verify_focustrap.mjs <file.html> --open=<trigger> [--dialog=<sel>] [--dark]'); process.exit(0); }
+/* No trigger means nothing was opened and nothing was measured. That exited 0,
+   and run through gate.mjs it left a passing receipt for the page, which cleared
+   the Stop hook for a page no gate had looked at (2026-10-20). Exit 2 is this
+   repo's "I could not look". */
+if (!file || !open) {
+  console.log('verify_focustrap: no --open=<trigger> given, so no dialog was opened and nothing was measured.');
+  console.log('usage: node scripts/verify_focustrap.mjs <file.html> --open=<trigger> [--dialog=<sel>] [--dark]');
+  process.exit(2);
+}
 
 const browser = await chromium.launch({ channel: 'chrome' }).catch(() => chromium.launch());
 const page = await browser.newPage({ viewport: { width: 1100, height: 800 } });

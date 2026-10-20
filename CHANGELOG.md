@@ -10,6 +10,43 @@ with auto-generated notes instead.
 
 ---
 
+### `v2.10.1`
+
+**The skills work on a plugin install, and no skill can read a skipped gate
+as a pass.** Each fix below was reproduced first and is held by a test that
+fails without it.
+
+- **Kit paths in skills (#9).** Seventeen references in seven skills named a
+  kit file relative to the repo root (`.claude/rules/...`, `tokens/`,
+  `frameworks/`, `CLAUDE.md`). On a plugin install the kit is not the user's
+  project, and in a real session `design-tokens` opened none of the 15 files
+  its steps name. All now go through `${CLAUDE_SKILL_DIR}/../../../`, and
+  `validate_instruction_surface.py` rejects the bare form.
+- **Browser gates run bare (#10).** Ten skills ran render gates directly, which
+  on a machine with no browser print `SKIPPED` and exit 0. Measurement gates
+  now run through `scripts/gate.mjs`, which requires the browser and records a
+  receipt. `taste_audit` and `slop_tells` carry `DS_REQUIRE_BROWSER=1` instead,
+  so a taste heuristic never leaves a receipt that clears the Stop hook. The
+  validator rejects a bare browser gate in any skill.
+- **The confirm Delete was never measured (#11).** The settings screen was
+  rendered with its dialog closed, so a blue confirm Delete passed
+  `lint_intent` unseen. A new render entry, `settings-confirm`, renders it open
+  and runs the same 13 gates as the settings page. A test turns the confirm
+  Delete blue in a copy and checks the gate refuses it.
+- **`verify_focustrap` without `--open` exited 0.** Through `gate.mjs` that was
+  a passing receipt for a page nothing had measured, and it cleared the Stop
+  hook. It now exits 2, this repo's "could not look". The launch-failure test
+  was passing `--open button`, which the gate never parsed, so it never tested
+  a launch failure for this gate; it now passes `--open=button`.
+- **README.** It said `/plugin install` does not pull in Playwright. Claude Code
+  2.1.301 does install it into the plugin folder; the text now says what was
+  measured. The plugin install section now says the browser gates need Chrome,
+  and that `uninstall` deletes the plugin's data folder.
+- **npm catches up.** The npm package for 2.10.0 predates the dark-mode focus
+  ring fixes and the clearer `/observe` wording. 2.10.1 carries both.
+
+---
+
 ### `v2.10.0`
 
 **Agent observability: did the agent follow the rules?** The hooks now keep a

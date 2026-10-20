@@ -71,10 +71,10 @@ write down what actually changed. A control that changes nothing is a finding.
 
 ```bash
 KIT=${CLAUDE_SKILL_DIR}/../../..
-node $KIT/scripts/taste_audit.mjs      <file> && node $KIT/scripts/taste_audit.mjs <file> --dark
-node $KIT/scripts/slop_tells.mjs       <file> && node $KIT/scripts/slop_tells.mjs  <file> --dark
-node $KIT/scripts/verify_overflow.mjs  <file|dir>
-node $KIT/scripts/verify_responsive.mjs <file|dir> --scale=1.25
+DS_REQUIRE_BROWSER=1 node $KIT/scripts/taste_audit.mjs      <file> && DS_REQUIRE_BROWSER=1 node $KIT/scripts/taste_audit.mjs <file> --dark
+DS_REQUIRE_BROWSER=1 node $KIT/scripts/slop_tells.mjs       <file> && DS_REQUIRE_BROWSER=1 node $KIT/scripts/slop_tells.mjs  <file> --dark
+node $KIT/scripts/gate.mjs verify_overflow.mjs  <file|dir>
+node $KIT/scripts/gate.mjs verify_responsive.mjs <file|dir> --scale=1.25
 ```
 
 Report what they actually printed. These are heuristics: they name what you saw,

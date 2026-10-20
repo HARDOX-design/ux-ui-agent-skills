@@ -28,11 +28,11 @@ reasoned number.
    - Re-run until green. Do not announce success between failures.
 4. For any rendered HTML touched this session, also run the pixel-truth checks
    the gate cannot prove:
-   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_states.mjs <file> [--dark]`
-   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_responsive.mjs <file>`
+   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_states.mjs <file> [--dark]`
+   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file>`
    - RENDER-AND-LOOK: screenshot the harness, park the pointer off it, inspect
      every state, click each control to confirm the state changed.
 
 Honest scope: these gates prove objective correctness (tokens, a11y, no drift).
-They do not prove taste. Pair with `node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs` + human review;
+They do not prove taste. Pair with `DS_REQUIRE_BROWSER=1 node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs` + human review;
 never claim auto-100% on aesthetics.

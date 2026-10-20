@@ -99,6 +99,28 @@ test('every render gate REFUSES a missing path, rather than crashing into one', 
   }
 });
 
+test('verify_focustrap with no --open refuses, and leaves no receipt that clears the Stop hook', () => {
+  // It printed usage and exited 0. Through gate.mjs that was a passing receipt
+  // for a page nothing had measured, and the Stop hook accepted it.
+  const page = 'tests/fixtures/good/trapped-modal.html';
+  const direct = node('verify_focustrap.mjs', [page], { env: { DS_REQUIRE_BROWSER: '1' } });
+  assert.equal(direct.status, 2, direct.out);
+  assert.match(direct.out, /nothing was measured/);
+  // A fresh copy, with a comment no other copy has: a receipt for the repo's
+  // fixture from some earlier run must not be what --check finds.
+  const data = mkdtempSync(join(tmpdir(), 'ds-ft-'));
+  const copy = join(data, 'page.html');
+  writeFileSync(copy, readFileSync(join(ROOT, page), 'utf8') + `\n<!-- ${data} -->\n`);
+  try {
+    const wrapped = node('gate.mjs', ['verify_focustrap.mjs', copy], { env: { CLAUDE_PLUGIN_DATA: data } });
+    assert.equal(wrapped.status, 2, wrapped.out);
+    const passing = node('gate.mjs', ['--check', copy], { env: { CLAUDE_PLUGIN_DATA: data, CLAUDE_PROJECT_DIR: data } });
+    assert.notEqual(passing.status, 0, `a run that measured nothing left a passing receipt:\n${passing.out}`);
+  } finally {
+    rmSync(data, { recursive: true, force: true });
+  }
+});
+
 test('a render gate given no target at all refuses too', () => {
   // The other half of the same hole: no argument is not "scan everything".
   const r = node('verify_states.mjs', [], { env: { DS_REQUIRE_BROWSER: '1' } });

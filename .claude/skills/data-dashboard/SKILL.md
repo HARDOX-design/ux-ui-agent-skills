@@ -151,11 +151,11 @@ screenshot and looking, which is why that step is not optional:
 ## 7. The loop
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/../../../scripts/measure_render.mjs <file> && node ${CLAUDE_SKILL_DIR}/../../../scripts/measure_render.mjs --dark <file>
-node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_states.mjs <file>  && node ${CLAUDE_SKILL_DIR}/../../../scripts/axe_audit.mjs --dark <file>
-node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_responsive.mjs <file> --scale=1.25
-node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_interactive.mjs <file>
-node ${CLAUDE_SKILL_DIR}/../../../scripts/slop_tells.mjs --strict <file> && node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs --strict <file>
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs measure_render.mjs <file> && node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs measure_render.mjs --dark <file>
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_states.mjs <file>  && node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs axe_audit.mjs --dark <file>
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file> --scale=1.25
+node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_interactive.mjs <file>
+DS_REQUIRE_BROWSER=1 node ${CLAUDE_SKILL_DIR}/../../../scripts/slop_tells.mjs --strict <file> && DS_REQUIRE_BROWSER=1 node ${CLAUDE_SKILL_DIR}/../../../scripts/taste_audit.mjs --strict <file>
 ```
 
 Then **screenshot it and look**, in both themes, at 1600 and 390 wide. The gates
