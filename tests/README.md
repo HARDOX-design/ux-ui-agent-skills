@@ -1,4 +1,4 @@
-# tests/ — the layer that checks the gates
+# tests/: the layer that checks the gates
 
 The kit's 51 objective gates all point at `examples/` that already pass. That
 proves a gate says yes to good work. It never proves the gate can still say no.
@@ -44,7 +44,7 @@ would otherwise look like a detection:
 
 `fixtures/bad/` contains an emoji, raw hex, and a failing contrast pair on
 purpose. None of the repo-wide default scans reach into `tests/`, and
-`meta/guards.test.mjs` holds that in place — if a default scan ever grows to
+`meta/guards.test.mjs` holds that in place: if a default scan ever grows to
 cover this directory, CI would go red for the wrong reason.
 
 ## Known blind spots
@@ -77,7 +77,7 @@ directory exists to prevent.
   covers both modes, plus the output contract: a directory build emits the whole
   system rather than colour alone, and no composite token reaches the CSS as
   `[object Object]` or a stray brace. Those last two exist because the bugs
-  shipped — the colour-only directory build stood for four releases while CI ran
+  shipped: the colour-only directory build stood for four releases while CI ran
   the command and checked only its exit status.
 - **Taste is still not covered.** `slop_tells` and `taste_audit` only fail on
   HIGH findings under `--strict`; MED and LOW never fail anything, by design.

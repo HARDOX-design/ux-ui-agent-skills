@@ -19,14 +19,14 @@ Build from small to large: **Atoms → Molecules → Organisms → Templates →
 
 ### Design Thinking
 Follow the double diamond: **Discover → Define → Develop → Deliver**
-- Diverge before converging — explore multiple solutions before committing
+- Diverge before converging: explore multiple solutions before committing
 - Validate at every fidelity level (see `workflows/prototyping.md`)
-- User research is not optional — see the usability testing script in `workflows/prototyping.md`
+- User research is not optional. See the usability testing script in `workflows/prototyping.md`
 
 ### Inclusive Design
 Design for the edges, and the center benefits:
-- WCAG 2.2 AA is the **minimum**, not the goal — see `accessibility/wcag-checklist.md`
-- Keyboard navigation is not an afterthought — it's designed first
+- WCAG 2.2 AA is the **minimum**, not the goal (see `accessibility/wcag-checklist.md`)
+- Keyboard navigation is not an afterthought: it's designed first
 - Color is never the only way to convey information
 - Target sizes: 24×24px minimum (WCAG 2.5.8), 44×44px recommended for primary actions
 - See ARIA implementation patterns in `accessibility/aria-patterns.md`
@@ -108,7 +108,7 @@ metrics differ per platform. Prove it with `node scripts/verify_responsive.mjs
 2. **A grid or flex item keeps `min-width:auto`**, so a child that refuses to shrink
    widens its own track. Fix: `min-inline-size:0` on the item, or pin the track with
    `grid-template-columns:minmax(0,1fr)`.
-3. **One unbreakable token** — an email, a URL, an API key — sets the element's
+3. **One unbreakable token** (an email, a URL, an API key) sets the element's
    min-content width. Fix: `overflow-wrap:anywhere`, which shrinks min-content too;
    `break-word` alone does not.
 4. **A `white-space:nowrap` tooltip or pill has no upper bound.** Fix:
@@ -126,12 +126,12 @@ everything visible sits inside it. Give the span a positioned ancestor.
 
 ### Component Quality Bar
 Every component must have:
-1. **Anatomy diagram** — Visual structure breakdown
-2. **Variants** — All visual variants (primary, secondary, ghost, etc.)
-3. **Sizes** — sm, md, lg with exact dimensions
-4. **States** — Default, Hover, Focus, Active, Disabled, Loading (minimum 6)
-5. **Token mapping** — Every value traced to a design token
-6. **Accessibility** — ARIA pattern, keyboard model, screen reader behavior
+1. **Anatomy diagram**: Visual structure breakdown
+2. **Variants**: All visual variants (primary, secondary, ghost, etc.)
+3. **Sizes**: sm, md, lg with exact dimensions
+4. **States**: Default, Hover, Focus, Active, Disabled, Loading (minimum 6)
+5. **Token mapping**: Every value traced to a design token
+6. **Accessibility**: ARIA pattern, keyboard model, screen reader behavior
 
 ### Component References
 | Level | File | Contents |

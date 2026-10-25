@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SCREENSHOT DOCS — the README's images, regenerated from the real files.
+ * SCREENSHOT DOCS: the README's images, regenerated from the real files.
  *
  * A design kit whose README shows no output asks the reader to take its word.
  * These shots are rendered from the same HTML the gates measure, so what the
@@ -21,7 +21,7 @@
  * no image sits there unreferenced. Re-run without --check after any visual
  * change, and look at the result.
  */
-import { readFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdirSync, existsSync, copyFileSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 
 const ROOT = resolve(dirname(new URL(import.meta.url).pathname), '..');
@@ -29,7 +29,6 @@ const OUT = join(ROOT, '.github', 'images');
 
 /** [source html, output name, theme, viewport, fullPage] */
 const SHOTS = [
-  ['cover.html',                              'hero.png',                 'light', [1280, 630],  false],
   ['examples/showcase/index.html',            'dashboard-light.png',      'light', [1440, 1400], false],
   ['examples/showcase/index.html',            'dashboard-dark.png',       'dark',  [1440, 1400], false],
   ['examples/sample-app/preview.html',        'reference-app-light.png',  'light', [1280, 1000], true],
@@ -92,6 +91,15 @@ const THUMBS = [
 ];
 const THUMB_DIR = join(ROOT, 'examples', 'thumbs');
 
+/* Not rendered here. The README header is a <picture> of the two brand covers,
+   which are rendered from their SVGs (.github/brand/README.md), and hero.png is
+   only its <img> fallback, so it has to be the dark cover byte for byte. This
+   used to render an older cover page into hero.png instead, so a run of this
+   script would have replaced the cover with a page the README no longer shows. */
+const COPIES = [
+  ['.github/brand/xias-cover-dark.png', 'hero.png'],
+];
+
 /** Images that exist for somewhere other than the README body. */
 const NOT_INLINE = new Set(['social-preview.png']);
 
@@ -99,7 +107,7 @@ function check() {
   const readme = readFileSync(join(ROOT, 'README.md'), 'utf8');
   const referenced = new Set([...readme.matchAll(/\.github\/images\/([\w.-]+\.png)/g)].map(m => m[1]));
   const onDisk = existsSync(OUT) ? new Set(readdirSync(OUT).filter(f => f.endsWith('.png'))) : new Set();
-  const declared = new Set(SHOTS.map(s => s[1]));
+  const declared = new Set([...SHOTS.map(s => s[1]), ...COPIES.map(c => c[1])]);
   const issues = [];
 
   for (const name of declared) {
@@ -107,6 +115,11 @@ function check() {
   }
   for (const name of referenced) {
     if (!onDisk.has(name)) issues.push(`dangling: README shows ${name}, which does not exist`);
+  }
+  for (const [src, name] of COPIES) {
+    if (onDisk.has(name) && !readFileSync(join(ROOT, src)).equals(readFileSync(join(OUT, name)))) {
+      issues.push(`stale: ${name} is meant to be a copy of ${src}, and is not`);
+    }
   }
   for (const name of onDisk) {
     if (NOT_INLINE.has(name)) continue;
@@ -155,7 +168,11 @@ async function shoot() {
     console.log(`  thumbs/${name}  <- ${src} (${theme})`);
   }
   await browser.close();
-  console.log(`\nWrote ${SHOTS.length} image(s) to .github/images/ and ${THUMBS.length} to examples/thumbs/.`);
+  for (const [src, name] of COPIES) {
+    copyFileSync(join(ROOT, src), join(OUT, name));
+    console.log(`  ${name}  <- ${src} (copied)`);
+  }
+  console.log(`\nWrote ${SHOTS.length + COPIES.length} image(s) to .github/images/ and ${THUMBS.length} to examples/thumbs/.`);
   console.log('Now LOOK at them before committing.');
 }
 

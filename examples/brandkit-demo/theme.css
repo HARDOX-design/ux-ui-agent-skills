@@ -1,4 +1,4 @@
-/* brandkit-demo theme.css — generated foundation (OKLCH brand hue 195, fintech "precise/calm") */
+/* brandkit-demo theme.css: generated foundation (OKLCH brand hue 195, fintech "precise/calm") */
 :root{
   --color-surface-page:#f3f5f7;--color-surface-card:#ffffff;--color-surface-raised:#e5e8eb;
   --color-text-primary:#242729;--color-text-secondary:#53595d;--color-text-on-action:#ffffff;
@@ -50,7 +50,7 @@
   --color-action-destructive:#ba4542;--color-action-destructive-hover:#95302f;
   --color-border-default:#3c4044;--color-border-strong:#868d93;
   --color-text-link:#00bdbe;--color-feedback-success-icon:#62bb78;--color-feedback-error-text:#f3a39e;--color-feedback-warning-icon:#e0a83a;
-  --color-surface-brand:#103536;        /* dark teal wash — text-link passes on it */
+  --color-surface-brand:#103536;        /* dark teal wash; text-link passes on it */
   --color-chart-1:#60a5fa;--color-chart-2:#fb923c;--color-chart-3:#34d399;
   --color-chart-4:#f472b6;--color-chart-5:#a78bfa;--color-chart-6:#22d3ee;
   --color-chart-grid:#3c4044;--color-chart-track:#3c4044;

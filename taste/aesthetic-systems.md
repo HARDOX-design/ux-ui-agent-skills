@@ -1,9 +1,9 @@
-# Aesthetic Systems — Archetypes + the Design-System Library
+# Aesthetic Systems: Archetypes + the Design-System Library
 
-Taste is not one look — it is the ability to choose the *right* look for the brief and execute it with conviction. This file gives you two layers:
+Taste is not one look. It is the ability to choose the *right* look for the brief and execute it with conviction. This file gives you two layers:
 
-1. **Archetypes** — a small set of reusable aesthetic directions, each mapped to our token system. Use these to reason about *what kind* of design fits.
-2. **The Library** — 2,144 concrete, named design-system specs in `design-systems/library/`. Use these when the brief points at a specific vibe (or a specific brand reference).
+1. **Archetypes**: a small set of reusable aesthetic directions, each mapped to our token system. Use these to reason about *what kind* of design fits.
+2. **The Library**: 2,144 concrete, named design-system specs in `design-systems/library/`. Use these when the brief points at a specific vibe (or a specific brand reference).
 
 > Taste serves the **Aesthetics** tier of the Decision Framework. An archetype or library system may set the *visual direction* but must still pass every Accessibility, Consistency, and token rule. See [`taste/design-taste.md`](./design-taste.md) for the anti-slop doctrine and [`taste/motion-choreography.md`](./motion-choreography.md) for motion.
 
@@ -12,7 +12,7 @@ Taste is not one look — it is the ability to choose the *right* look for the b
 ## How to Use This File
 
 1. **Read the brief.** Infer audience, domain, and emotional tone. Don't apply a direction the brief didn't ask for.
-2. **Pick a direction** — either an Archetype (below) or a named system from the library (see "Finding a system in the library").
+2. **Pick a direction**: either an Archetype (below) or a named system from the library (see "Finding a system in the library").
 3. **Resolve to tokens.** Translate the chosen direction's color/type/space/radius/shadow/motion into our token files (`tokens/*.json`), overriding semantic tokens where needed (see the contract below).
 4. **Render** through the target framework via the [Framework Adapter Protocol](../frameworks/adapter-protocol.md).
 5. **Run the pre-flight aesthetic check** in `taste/design-taste.md` before shipping.
@@ -25,7 +25,7 @@ Each archetype is a *recipe*, not a brand. Settings reference our existing token
 
 ### 1. High-End Agency (Linear / Apple-tier)
 - **When:** premium products, launches, anything that must feel expensive.
-- **Type:** large display scale (`6xl`–`7xl`), tight leading, wide measure; one UI sans.
+- **Type:** large display scale (`6xl` to `7xl`), tight leading, wide measure; one UI sans.
 - **Color:** off-black on warm/cool near-white; single restrained accent; calibrated low-chroma.
 - **Space:** generous macro-whitespace; asymmetric grids; edge tension.
 - **Depth:** hairline borders + subtle layered elevation; shadows rare.
@@ -34,7 +34,7 @@ Each archetype is a *recipe*, not a brand. Settings reference our existing token
 
 ### 2. Editorial Minimalism
 - **When:** content, docs, marketing with a literary tone.
-- **Type:** serif or refined sans for headings; strict 60–75ch measure; strong scale contrast.
+- **Type:** serif or refined sans for headings; strict 60-75ch measure; strong scale contrast.
 - **Color:** paper/ink neutrals; one ink accent.
 - **Space:** column grids, lots of air, baseline rhythm.
 - **Depth:** flat; rules and whitespace separate, not boxes.
@@ -57,12 +57,12 @@ Each archetype is a *recipe*, not a brand. Settings reference our existing token
 - **Library kin:** `duolingo`, `lingo`, `friendly`, `intercom`, `zapier`, `xiaohongshu`.
 
 ### 5. Dark-Tech / Cinematic
-- **When:** AI, crypto, gaming, infra — high-drama dark surfaces.
+- **When:** AI, crypto, gaming, infra: high-drama dark surfaces.
 - **Type:** tight sans or mono; bright type on dark.
 - **Color:** void-black surfaces, neon/gradient accents, desaturated supporting hues.
 - **Space:** bounded media at dramatic scale - the drama comes from contrast and
   type, not from filling the viewport. Cap media at `sizing.screen.media-max-block`.
-- **Depth:** glow, gradient, glass — used once each, never stacked.
+- **Depth:** glow, gradient, glass, used once each, never stacked.
 - **Library kin:** `elevenlabs`, `runwayml`, `cursor`, `revolut`, `spacex`, `cosmic`, `shopify`.
 
 ### 6. Morphism & Effects
@@ -71,7 +71,7 @@ Each archetype is a *recipe*, not a brand. Settings reference our existing token
 
 ---
 
-## Library Contract — mapping a `DESIGN.md` to our tokens
+## Library Contract: mapping a `DESIGN.md` to our tokens
 
 Specs come in two shapes, and both carry the same information:
 
@@ -90,7 +90,7 @@ To apply one:
 
 | `DESIGN.md` section | Maps to |
 |---------------------|---------|
-| `colors:` / Colors / Color Palette & Roles (hex + role) | Override `semantic.*` in `tokens/colors.json` (primitives stay; re-point semantic aliases). Verify every pair against `accessibility/wcag-checklist.md` contrast — **a brand hex that fails contrast must be adjusted**. |
+| `colors:` / Colors / Color Palette & Roles (hex + role) | Override `semantic.*` in `tokens/colors.json` (primitives stay; re-point semantic aliases). Verify every pair against `accessibility/wcag-checklist.md` contrast: **a brand hex that fails contrast must be adjusted**. |
 | `typography:` / Typography (family, scale, weight) | Set families/scale in `tokens/typography.json`; keep our composite `textStyle` structure. |
 | `spacing:` / Layout / Spacing | Map to `tokens/spacing.json` scale + `tokens/breakpoints.json` grid. |
 | `rounded:` / Shapes / Radius / geometry | `tokens/borders.json`. |

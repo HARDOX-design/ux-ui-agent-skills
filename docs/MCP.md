@@ -29,8 +29,8 @@ From a clone, `node mcp/server.mjs`.
 
 ## What it is for
 
-The half of this kit that does the work — the tokens, the component specs, the
-doctrine, and **all 52 gates** — never depended on which agent was reading.
+The half of this kit that does the work (the tokens, the component specs, the
+doctrine, and **all 52 gates**) never depended on which agent was reading.
 `AGENTS.md` already lets Codex, Cursor and Copilot read the doctrine. This lets
 any MCP client **run the gates**, which reading alone cannot do.
 
@@ -62,7 +62,7 @@ before.
 | 2 | **It could not look** |
 
 Two is the one that matters. A path that does not exist, a gate with no browser,
-a missing theme — none of those is a pass, and the server reports them as errors
+a missing theme: none of those is a pass, and the server reports them as errors
 rather than letting a clean-looking result stand for a run that measured
 nothing. `DS_REQUIRE_BROWSER=1` is set on every call for the same reason: a
 render gate with no browser would otherwise print SKIPPED and exit 0.
@@ -87,7 +87,7 @@ protocol is implemented directly: MCP is JSON-RPC 2.0 over stdio, and the four
 methods a tools-only server needs are about forty lines. Written against the
 `2025-06-18` specification.
 
-The render gates still need a browser — `npx playwright install chrome`, once
+The render gates still need a browser: `npx playwright install chrome`, once
 per machine. `list_gates` says which gates those are, and `review_ui`'s
 `skip_browser` runs only the file-reading ones and states in its output that the
 result covers less.

@@ -19,11 +19,11 @@ Treat the token + component API as a public contract and version with SemVer:
 
 ## Contribution workflow
 
-1. **Propose** — open an issue: problem, evidence (where it recurs), proposed pattern. Check it isn't an existing component/variant first.
-2. **Validate** — does it serve a real, repeated need? One-off → keep it in the product, not the system.
-3. **Design to the bar** — full spec: anatomy, variants, sizes, the 8 states, token mapping, a11y (`.claude/rules/components.md` → Component Quality Bar).
-4. **Review** — run `workflows/design-review.md` + `a11y-audit`; verify tokens with `scripts/validate_tokens.py` and contrast with `scripts/contrast.py`.
-5. **Document & ship** — add the spec file, wire it into CLAUDE.md (File Reference Map + relevant table), bump version, changelog.
+1. **Propose**: open an issue: problem, evidence (where it recurs), proposed pattern. Check it isn't an existing component/variant first.
+2. **Validate**: does it serve a real, repeated need? One-off → keep it in the product, not the system.
+3. **Design to the bar**: full spec: anatomy, variants, sizes, the 8 states, token mapping, a11y (`.claude/rules/components.md` → Component Quality Bar).
+4. **Review**: run `workflows/design-review.md` + `a11y-audit`; verify tokens with `scripts/validate_tokens.py` and contrast with `scripts/contrast.py`.
+5. **Document & ship**: add the spec file, wire it into CLAUDE.md (File Reference Map + relevant table), bump version, changelog.
 
 **Promotion path:** product one-off → candidate (documented, used in ≥2 places) → core (stable API, versioned). Don't promote prematurely.
 
@@ -31,10 +31,10 @@ Treat the token + component API as a public contract and version with SemVer:
 
 Never delete silently. Deprecate, then remove:
 
-1. **Mark** — flag the token/component/prop as deprecated in its spec with the reason, the replacement, and the removal version.
-2. **Warn** — console warning in code adapters; visible note in docs. Keep it working through the deprecation window (≥ 1 minor cycle).
-3. **Migrate** — provide a mapping (old → new) and, where possible, a codemod or `design-systems/crosswalk.md`-style table.
-4. **Remove** — only in a **major** release, after the window, with the removal listed in the changelog.
+1. **Mark**: flag the token/component/prop as deprecated in its spec with the reason, the replacement, and the removal version.
+2. **Warn**: console warning in code adapters; visible note in docs. Keep it working through the deprecation window (≥ 1 minor cycle).
+3. **Migrate**: provide a mapping (old → new) and, where possible, a codemod or `design-systems/crosswalk.md`-style table.
+4. **Remove**: only in a **major** release, after the window, with the removal listed in the changelog.
 
 ### Removed in 3.0.0: the short token names
 

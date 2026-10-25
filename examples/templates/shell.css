@@ -1,5 +1,5 @@
-/* shell.css — the chrome every industry template shares: app shell, panels,
- * tables, badges, buttons. Each template adds only what its domain needs, so a
+/* shell.css: the chrome every industry template shares (app shell, panels,
+ * tables, badges, buttons). Each template adds only what its domain needs, so a
  * fix here is a fix everywhere and no screen invents its own button.
  * Values come from brandkit-demo/theme.css; nothing is typed in. */
 *{box-sizing:border-box;margin:0}

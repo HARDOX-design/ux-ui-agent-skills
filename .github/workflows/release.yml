@@ -1,7 +1,7 @@
 name: Release on tag
 
 # Auto-create a GitHub Release whenever a vX.Y.Z tag is pushed.
-# Uses the built-in GITHUB_TOKEN — no manual `gh auth login` / npm login needed.
+# Uses the built-in GITHUB_TOKEN, so no manual `gh auth login` / npm login needed.
 on:
   push:
     tags:
@@ -143,13 +143,13 @@ jobs:
           echo "registry: $(npm config get registry)"
           echo "OIDC available: ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}${ACTIONS_ID_TOKEN_REQUEST_URL:-no}"
 
-      - name: Guard — tag must match package.json version
+      - name: 'Guard: tag must match package.json version'
         run: |
           PKG="$(node -p "require('./package.json').version")"
           TAG="${GITHUB_REF_NAME#v}"
           echo "package.json=$PKG  tag=$TAG"
           if [ "$PKG" != "$TAG" ]; then
-            echo "::error::Tag v$TAG does not match package.json version $PKG — bump package.json before tagging."
+            echo "::error::Tag v$TAG does not match package.json version $PKG. Bump package.json before tagging."
             exit 1
           fi
 

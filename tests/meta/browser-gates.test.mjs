@@ -1,7 +1,7 @@
 /**
  * Meta-gate: the render gates must still REJECT a broken page.
  *
- * These are the gates whose verdict nobody can eyeball — real computed contrast,
+ * These are the gates whose verdict nobody can eyeball: real computed contrast,
  * real Tab order, real overflow. Each one gets a page built to break exactly the
  * thing it claims to measure, plus a clean page it must accept, so "passing"
  * cannot mean "no longer looking".

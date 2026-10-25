@@ -1,4 +1,4 @@
-# Evals — does an agent with this kit actually produce good work?
+# Evals: does an agent with this kit actually produce good work?
 
 Every other gate in this repo measures the kit's own files. That answers "is the
 system self-consistent", which is not the question that matters. The question that

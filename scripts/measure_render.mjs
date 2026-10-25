@@ -2,7 +2,7 @@
 /**
  * REAL-render WCAG gate. Opens HTML in headless Chrome, disables transitions,
  * and measures the contrast of every visible text element against its true
- * (alpha-composited) background. This is ground truth — not hand-typed numbers.
+ * (alpha-composited) background. This is ground truth, not hand-typed numbers.
  *
  * Usage:
  *   node scripts/measure_render.mjs examples/apple-demo/index.html
@@ -24,7 +24,7 @@ catch {
   // stays skippable for local convenience; CI and accuracy_report set it to 1, so a
   // machine that cannot render fails loudly instead of reporting green on nothing.
   const required = process.env.DS_REQUIRE_BROWSER === "1";
-  console.log(`measure_render: playwright not installed — ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
+  console.log(`measure_render: playwright not installed: ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
   process.exit(required ? 1 : 0);
 }
 
@@ -57,7 +57,7 @@ catch {
       console.log('Fix: npm install && npx playwright install chrome');
       process.exit(1);
     }
-    console.log('measure_render: no browser available — SKIPPED');
+    console.log('measure_render: no browser available: SKIPPED');
     process.exit(0);
   }
 }
@@ -104,10 +104,10 @@ for (const f of files) {
   const mode = dark ? ' [dark]' : '';
   if (fails.length) {
     totalFail += fails.length;
-    console.log(`\nFAIL ${f}${mode} — ${fails.length} text pair(s) below WCAG AA:`);
+    console.log(`\nFAIL ${f}${mode}: ${fails.length} text pair(s) below WCAG AA:`);
     for (const x of fails) console.log(`  x <${x.tag}> "${x.text}" ${x.r.toFixed(2)}:1 (need ${x.need})  [rgb(${x.color.map(Math.round)}) on rgb(${x.bg.map(Math.round)})]`);
   } else {
-    console.log(`OK   ${f}${mode} — all ${items.length} text element(s) meet WCAG AA`);
+    console.log(`OK   ${f}${mode}: all ${items.length} text element(s) meet WCAG AA`);
   }
 }
 await browser.close();

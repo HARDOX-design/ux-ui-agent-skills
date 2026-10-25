@@ -26,7 +26,7 @@ catch {
   // stays skippable for local convenience; CI and accuracy_report set it to 1, so a
   // machine that cannot render fails loudly instead of reporting green on nothing.
   const required = process.env.DS_REQUIRE_BROWSER === "1";
-  console.log(`verify_responsive: playwright not installed — ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
+  console.log(`verify_responsive: playwright not installed: ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
   process.exit(required ? 1 : 0);
 }
 
@@ -71,7 +71,7 @@ if (fails.length) {
   console.log(`verify_responsive: ${advisory ? 'ADVISORY' : 'FAIL'} (${at})`);
   for (const m of fails) console.log('  x ' + m);
   if (!advisory) process.exit(1);
-  console.log('  (advisory run — reported, not failed)');
+  console.log('  (advisory run: reported, not failed)');
   process.exit(0);
 }
-console.log(`verify_responsive: OK — ${files.length} file(s), no horizontal overflow at ${at}`);
+console.log(`verify_responsive: OK: ${files.length} file(s), no horizontal overflow at ${at}`);

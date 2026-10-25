@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 COLORS = ROOT / "tokens" / "colors.json"
 
-# REQUIRED pairs — readable text + actions; a failure FAILS the build (WCAG 1.4.3).
+# REQUIRED pairs: readable text + actions; a failure FAILS the build (WCAG 1.4.3).
 # (foreground path, background path, min ratio, label)
 PAIRS = [
     ("semantic.text.primary",   "semantic.surface.page", 4.5, "body text on page"),
@@ -28,7 +28,7 @@ PAIRS = [
     ("semantic.border.strong",  "semantic.surface.page", 3.0, "essential control border (WCAG 1.4.11)"),
 ]
 
-# ADVISORY pairs — intentionally de-emphasized text/decoration. Reported, not failed:
+# ADVISORY pairs: intentionally de-emphasized text/decoration. Reported, not failed:
 # tertiary is for incidental non-essential text; border.default is decorative (use border.strong
 # for any boundary that identifies a control).
 ADVISORY = [
@@ -110,11 +110,11 @@ def check(data, overrides, mode, pairs, aaa, required):
         if fg is None or bg is None:
             # A required pair whose tokens are absent measures nothing. Skipping it
             # printed "OK: all required contrast pairs pass" for a file with no tokens
-            # at all — the docstring always promised a missing token fails, so it does.
+            # at all. The docstring always promised a missing token fails, so it does.
             mark = "FAIL" if required else "?"
             print(f"  {mark} {label}: token missing ({fg_path}={fg}, {bg_path}={bg})")
             if required:
-                issues.append(f"{mode}: {label} — token missing ({fg_path}={fg}, {bg_path}={bg})")
+                issues.append(f"{mode}: {label}: token missing ({fg_path}={fg}, {bg_path}={bg})")
             continue
         r = ratio(fg, bg)
         ok = r >= minr
@@ -147,7 +147,7 @@ def main(argv):
     if dark:
         check(data, dark, "DARK", ADVISORY, aaa, False)
     if not dark:
-        print("\n(no dark section found — skipping dark checks)")
+        print("\n(no dark section found; skipping dark checks)")
     print()
     if fails:
         print(f"FAIL: {len(fails)} required pair(s) below WCAG minimum:")

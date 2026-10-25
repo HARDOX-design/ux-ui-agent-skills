@@ -3,7 +3,7 @@
  *
  * A gate pointed only at its own repo can be shown passing and never shown
  * refusing, which makes it a claim rather than a check. `--root` points each one
- * at a copy, so the refusal is demonstrable — and these tests are the
+ * at a copy, so the refusal is demonstrable, and these tests are the
  * demonstration.
  */
 import { test } from 'node:test';

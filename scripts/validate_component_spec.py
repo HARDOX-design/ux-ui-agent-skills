@@ -2,7 +2,7 @@
 """Validate that every component spec in components/ meets the house quality bar.
 
 Each spec should document (per CLAUDE.md Component Quality Bar): anatomy, variants,
-the states, token mapping, and accessibility. This checks the spec docs themselves —
+the states, token mapping, and accessibility. This checks the spec docs themselves,
 not generated code.
 
 Usage:

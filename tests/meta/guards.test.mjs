@@ -25,7 +25,7 @@ test('every browser gate is accounted for', () => {
 
 test('a missing browser fails loudly under DS_REQUIRE_BROWSER, and only skips without it', () => {
   // Copied outside the repo so Node's upward node_modules lookup cannot find
-  // playwright — the state a clean CI runner or a fresh npx install is in.
+  // playwright, the state a clean CI runner or a fresh npx install is in.
   const dir = mkdtempSync(join(tmpdir(), 'ds-nobrowser-'));
   try {
     // _targets.mjs travels with them: the gates import it, and a missing import
@@ -153,7 +153,7 @@ test('a usage message is never mistaken for a pass', async () => {
 
 test('a SKIPPED run is never mistaken for a pass', async () => {
   const { accepts } = await import('../helpers/run.mjs');
-  const fake = { status: 0, out: 'verify_states: playwright not installed — SKIPPED', signal: null };
+  const fake = { status: 0, out: 'verify_states: playwright not installed: SKIPPED', signal: null };
   assert.throws(() => accepts(fake), /SKIPPED/);
 });
 

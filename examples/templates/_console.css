@@ -1,4 +1,4 @@
-/* _console.css — the chrome the dark operator consoles share. Extracted after the
+/* _console.css: the chrome the dark operator consoles share. Extracted after the
  * same five defects appeared in three of them: a missing .sr-only rule, headers
  * that could not shrink, tables with no scroller, secondary text with no
  * min-inline-size, and hidden labels without a positioned ancestor. */

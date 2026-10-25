@@ -30,7 +30,7 @@ const evals = countEntries(read('evals', 'run.mjs'), 'const GATES = [');
 
 test('the accuracy report still runs the full check list', () => {
   // Not a magic number to bump casually: dropping a check silently shrinks what
-  // "100%" means. Adding one is fine — update this line in the same commit.
+  // "100%" means. Adding one is fine; update this line in the same commit.
   assert.equal(accuracy, 52, `accuracy_report.mjs now has ${accuracy} checks`);
 });
 

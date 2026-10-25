@@ -4,9 +4,9 @@
 
 *aka **XIAS***
 
-### Turn Claude into a **Senior Design Architect** — 15+ years of expertise in design systems, accessibility, and production-ready component engineering.
+### Design-system doctrine for coding agents, and **52 gates** that check what they build instead of taking their word for it.
 
-A comprehensive kit of structured instructions, design tokens, runnable skills, and 2,144 design systems (2,087 of them measured from the live site) that turn Claude into a UX/UI expert agent — targeting **any framework** and **any design system**. Drop it into any project for consistent, accessible, token-driven design outputs, every time.
+A comprehensive kit of structured instructions, design tokens, runnable skills, and 2,144 design systems (2,087 of them measured from the live site) that turn Claude into a UX/UI expert agent, targeting **any framework** and **any design system**. Drop it into any project for consistent, accessible, token-driven design outputs, every time.
 
 <br>
 
@@ -46,7 +46,7 @@ A comprehensive kit of structured instructions, design tokens, runnable skills, 
 
 </div>
 
-**Current release [`v3.0.0`](https://github.com/plugin87/ux-ui-agent-skills/releases)** · [Changelog](CHANGELOG.md) · No build tools, dependencies, or runtime — a pure instruction and knowledge layer for AI agents.
+**Current release [`v3.0.0`](https://github.com/plugin87/ux-ui-agent-skills/releases)** · [Changelog](CHANGELOG.md) · No build tools, dependencies, or runtime: a pure instruction and knowledge layer for AI agents.
 
 ---
 
@@ -54,11 +54,11 @@ A comprehensive kit of structured instructions, design tokens, runnable skills, 
 
 
 Not a mockup. These are screenshots of the files in `examples/`, taken by
-`node scripts/screenshot_docs.mjs` from the same HTML the 52 gates measure — so
+`node scripts/screenshot_docs.mjs` from the same HTML the 52 gates measure, so
 what you see below is what the gate run passed, in both themes.
 
-**Click through them yourself: [plugin87.github.io/ux-ui-agent-skills](https://plugin87.github.io/ux-ui-agent-skills/)**
- — 49 live pages: twenty whole-product screens, every component harness, both
+**Click through them yourself: [plugin87.github.io/ux-ui-agent-skills](https://plugin87.github.io/ux-ui-agent-skills/)**:
+49 live pages: twenty whole-product screens, every component harness, both
 reference screens, with a theme toggle. No install, no clone.
 
 <img src=".github/images/dashboard-light.png" alt="Atlas revenue console in light theme: sidebar navigation, a hero net-recurring-revenue figure at 2.48 million with a weekly bar chart, retention and churn cards, a donut of revenue by plan, an account ranking, regional sparklines, a sortable renewals table and an activity feed" />
@@ -149,8 +149,8 @@ rot.
 
 ## It was run blind, and it came back as rework
 
-Two subagents were handed a brief and a project scaffolded by `ux-ui-skills new`
-— which installs the kit and ships **no example screens** — and nothing else. No
+Two subagents were handed a brief and a project scaffolded by `ux-ui-skills new`,
+which installs the kit and ships **no example screens**, and nothing else. No
 hints, no warning that anything would be scored, no access to the conversation
 that built the kit. They met `CLAUDE.md` and `.claude/rules/` the way a new
 user's agent does.
@@ -169,7 +169,7 @@ intent gate that did not know "cancel subscription" is destructive.
 
 Then the outputs went to `/critique`, which renders the work and argues for
 rejection. Verdict on two pages that pass all fourteen gates: **rework**, eight
-findings, five Major, and not one of them measurable — an empty state that reads
+findings, five Major, and not one of them measurable: an empty state that reads
 as a page that failed to load, a theme toggle that communicates nothing about its
 own state, a toast claiming "Draft project created" over a list that never
 changed, and a loading state wearing the disabled dimming so it reads as "you
@@ -177,7 +177,7 @@ cannot do this".
 
 **The blind outputs were never edited.** They are in `evals/out/` as the record
 of what a cold-start agent produced; patching them would be editing the
-experiment. The findings were spent on the kit instead — one of them became a
+experiment. The findings were spent on the kit instead. One of them became a
 gate, `verify_interactive.mjs`, which fails any control that declares a state
 contract and changes nothing when clicked.
 
@@ -193,7 +193,7 @@ The whole log, including what is still unproven, is in
 |-----------|-------------|
 | **Design Token Generation** | Produces DTCG-format JSON tokens (colors, typography, spacing, shadows, borders, breakpoints, motion) with a 3-tier architecture: Primitive → Semantic → Component |
 | **Component Design** | Designs components from Atoms to Templates following Atomic Design, with anatomy, variants, states, token mapping, and accessibility specs |
-| **Code Generation (any framework)** | Adapter Protocol targets **any** stack — React+Tailwind, Next.js, SwiftUI, Vue, Svelte, Angular, Solid, Web Components/Lit, React Native, Flutter, Jetpack Compose, vanilla CSS, CSS-in-JS — or generates a new adapter on demand |
+| **Code Generation (any framework)** | Adapter Protocol targets **any** stack (React+Tailwind, Next.js, SwiftUI, Vue, Svelte, Angular, Solid, Web Components/Lit, React Native, Flutter, Jetpack Compose, vanilla CSS, CSS-in-JS) or generates a new adapter on demand |
 | **Design-System Interop** | Maps to/from **any** design system (Material 3, Apple HIG, Fluent, Carbon, shadcn/ui, Radix…) via a role-based crosswalk |
 | **Runnable Skills** | 19 invocable `/skills` (each declaring `invocation: user|model`) + 5 slash commands + real scripts: token and contrast validators, real-render and state-aware WCAG gates, axe-core a11y, focus-trap, RTL, target size, keyboard, reduced motion, overflow, token-by-intent, taste and slop audits, token build |
 | **Accessibility Auditing** | Evaluates against WCAG 2.2 AA/AAA with prioritized findings (P0/P1/P2) |
@@ -210,13 +210,13 @@ The whole log, including what is still unproven, is in
 
 > **Five ways in, and which one is yours:** [docs/INSTALL.md](docs/INSTALL.md)
 > walks through the Claude Code plugin, the `AGENTS.md` surface for Codex and
-> Cursor, the MCP server, Homebrew and `npx` — what each one installs, and what
+> Cursor, the MCP server, Homebrew and `npx`: what each one installs, and what
 > you give up by choosing it.
 
-### Option A — Install as a Claude Code plugin (recommended)
+### Option A: Install as a Claude Code plugin (recommended)
 
 Two lines in Claude Code, and every skill, command, and agent is available in any
-project you open — no files copied into your repo:
+project you open, with no files copied into your repo:
 
 ```
 /plugin marketplace add plugin87/ux-ui-agent-skills
@@ -229,7 +229,7 @@ You get 26 skills and the `design-critic` agent.
 `design-tokens`, `design-component`, `design-code`, `design-review`,
 `a11y-audit`, `apply-aesthetic`, `data-dashboard`, `design-qa`,
 `figma-integration`, `performance`, `token-build`, `ux-writing`,
-`design-doctrine`, and `design-screen` — the one that claims "design a page /
+`design-doctrine`, and `design-screen`, the one that claims "design a page /
 screen / app", which until 2026-10-05 no skill did, so the most common request
 there is matched nothing strongly and the kit got used at a fraction of its
 depth.
@@ -239,13 +239,13 @@ direction that should be your call: `/brandkit`, `/governance`, `/image-to-code`
 `/migrate-design-system`, `/prototype`, `/redesign`, `/gate`, `/critique`,
 `/grill-me`, `/ship`, `/scaffold-project`, `/observe`. They carry
 `disable-model-invocation: true`, which is the field that actually stops the
-model invoking them — until 2026-10-05 six of them said `invocation: user`, a
+model invoking them. Until 2026-10-05 six of them said `invocation: user`, a
 key Claude Code does not read, so they were auto-invocable the whole time. The
 last five were commands and are skills now, so they have a `CLAUDE_SKILL_DIR` of
 their own and their paths resolve under a plugin install.
 
 `design-doctrine` carries the house rules that `CLAUDE.md` carries in the repo,
-because a plugin root `CLAUDE.md` is not loaded as project context — Claude
+because a plugin root `CLAUDE.md` is not loaded as project context, as Claude
 Code's own `plugin validate` says so.
 
 **Then just work.** Ask for the thing you want and the right skill loads itself:
@@ -287,7 +287,7 @@ Every page it opens is a page the gates measure. Delete the folder afterwards;
 nothing was installed. Or skip the copy entirely and use the
 [live demo](https://plugin87.github.io/ux-ui-agent-skills/).
 
-### Option B — Use it from any MCP client
+### Option B: Use it from any MCP client
 
 ```bash
 claude mcp add ux-ui-gates -- npx -y --package=ux-ui-agent-skills ux-ui-mcp
@@ -298,16 +298,16 @@ Six tools: `list_gates`, `run_gate`, `review_ui`, `get_doctrine`,
 generating, run the gates on what you produced after.
 
 `AGENTS.md` already lets any agent **read** the doctrine. This lets any MCP
-client **run the 52 gates**, which reading cannot do — plenty of things can
+client **run the 52 gates**, which reading cannot do. Plenty of things can
 describe good UI, very little can tell you afterwards that the contrast you
 shipped is 3.9:1 on hover.
 
 It returns what the gates printed, unedited, with their exit codes: 0 looked and
-found nothing, 1 found something, **2 could not look** — never a pass. No SDK
+found nothing, 1 found something, **2 could not look**, never a pass. No SDK
 dependency; the protocol is implemented directly so `"dependencies": {}` stays
 true. Details in [docs/MCP.md](docs/MCP.md).
 
-### Option C — Install with Homebrew
+### Option C: Install with Homebrew
 
 ```bash
 brew install plugin87/tap/ux-ui-agent-skills
@@ -321,7 +321,7 @@ its `test do` block asserts the installed CLI reports the version the formula
 names, and that `--agent codex` writes `AGENTS.md` without `CLAUDE.md` or
 `.claude/`. Details in [docs/HOMEBREW.md](docs/HOMEBREW.md).
 
-### Option D — Install with `npx`
+### Option D: Install with `npx`
 
 Drop the kit into any project, no clone needed:
 
@@ -334,7 +334,7 @@ npx ux-ui-agent-skills library get stripe   # fetch one design-system spec
 
 Flags: `--force` (overwrite existing files) · `--dry` (preview, change nothing).
 
-The 2,144 design-system specs are 26MB, and a project uses one or two, so
+The 2,144 design-system specs are 27.6MB, and a project uses one or two, so
 `init` does not copy them. It installs an index of every spec with its sha256,
 and the agent fetches the one it picks with `node scripts/library.mjs get
 <name>`. A fetched file whose sha256 does not match the index is refused and
@@ -343,7 +343,7 @@ plugin (Option A) and a clone carry every spec already.
 
 Working on the kit itself, or want it vendored? [Clone and copy](docs/GUIDE.md#install-from-a-clone) instead.
 
-**Then start using** — open the project in **Claude Code** or any Claude-powered IDE. `CLAUDE.md` loads automatically, activating the agent persona with full access to every tokens / components / taste / design-system file and the runnable `/skills`.
+**Then start using:** open the project in **Claude Code** or any Claude-powered IDE. `CLAUDE.md` loads automatically, activating the agent persona with full access to every tokens / components / taste / design-system file and the runnable `/skills`.
 
 <details>
 <summary><b>Example prompts</b></summary>
@@ -355,7 +355,7 @@ Working on the kit itself, or want it vendored? [Clone and copy](docs/GUIDE.md#i
 "Review this login page against WCAG 2.2 and Nielsen's heuristics"
 "Generate React + Tailwind code for a data table with sorting and pagination"
 "Create a color token palette for a fintech brand using blue as the primary"
-"Audit this form for accessibility issues — give me a prioritized findings table"
+"Audit this form for accessibility issues, and give me a prioritized findings table"
 "Write the empty state and error copy for the onboarding flow"
 "Spec the motion for the modal open/close with reduced-motion fallback"
 ```
@@ -370,7 +370,7 @@ Working on the kit itself, or want it vendored? [Clone and copy](docs/GUIDE.md#i
 The kit ships **52 objective gates** behind one command:
 
 ```bash
-node scripts/accuracy_report.mjs     # 52/52 or it fails — no partial credit
+node scripts/accuracy_report.mjs     # 52/52 or it fails, no partial credit
 ```
 
 **34 of them open a real browser, so they need one installed.** `npx
@@ -385,7 +385,7 @@ npx playwright install chrome        # real Chrome: six gates require the channe
 ```
 
 Without it those 34 report `REQUIRED, FAILING` under `accuracy_report.mjs`, which
-is the honest answer. Run individually they print `SKIPPED` and **exit 0** — so
+is the honest answer. Run individually they print `SKIPPED` and **exit 0**, so
 run a single render gate through `scripts/gate.mjs` (or prefix it with
 `DS_REQUIRE_BROWSER=1`) if you are reading its exit code, rather than reading
 silence as green. Every skill already does.
@@ -400,7 +400,7 @@ and zero emoji anywhere in the output or the instruction surface.
 browser, so what they measure is **rendered HTML**: the 23 component harnesses,
 the twenty industry screens, the reference app, the live demo, the starter
 template, and the React source compiled and server-rendered. The other 18 read
-files — token JSON and alias resolution, contrast math on the token source,
+files: token JSON and alias resolution, contrast math on the token source,
 component specs, hardcoded values, theme references, emoji, hooks, the
 instruction surface held in step across `CLAUDE.md` and `AGENTS.md`, and
 destructive-intent declarations in framework source.
@@ -411,7 +411,7 @@ read 35/16 until 2026-10-07, when the derivation was first run - two numbers
 nobody had measured, in the section about not stating numbers you did not
 measure.
 
-Framework source (`.tsx`, `.vue`, `.swift`) gets the file-reading checks — no
+Framework source (`.tsx`, `.vue`, `.swift`) gets the file-reading checks: no
 emoji, no hardcoded values, every `var(--…)` resolving to the theme, and, since a
 blue Delete shipped in this repo's own `Settings.tsx` while the HTML twin of that
 screen was correct, every destructive control declaring its intent
@@ -429,9 +429,9 @@ That is correctness. It is not quality, and the kit says so out loud:
 | Question | Answer | How |
 |---|---|---|
 | Is it correct? | Measured, all or nothing | `node scripts/accuracy_report.mjs` -> a real `N/N` |
-| Is it any good? | Judged, never scored | `/critique` — an adversarial `design-critic` that renders the work, argues for rejection, and cites evidence per finding |
+| Is it any good? | Judged, never scored | `/critique`: an adversarial `design-critic` that renders the work, argues for rejection, and cites evidence per finding |
 | Did the agent follow the rules? | Counted per session, from the hooks | `/observe` or `npx ux-ui-skills observe` -> pages edited and measured, Stop hook blocks, findings left open, sessions that quit while blocked |
-| Does the kit transfer to a cold start? | Measured, one brief at a time | `evals/` — cold-start briefs, then `node evals/run.mjs <brief-id>` points 15 objective gates at what the agent produced |
+| Does the kit transfer to a cold start? | Measured, one brief at a time | `evals/`: cold-start briefs, then `node evals/run.mjs <brief-id>` points 15 objective gates at what the agent produced |
 
 `/critique` exists because a passing gate is never evidence of taste. It refuses to
 review from source alone, screenshots at 1280 and 390 in both themes, clicks every
@@ -444,8 +444,8 @@ maker's reasoning is reviewing the argument instead of the artifact, and it
 agrees far too easily.
 
 The critic itself is scored. `tests/fixtures/critic/` holds four pages carrying
-fourteen seeded design defects — no focal point, an empty state with no way
-forward, a toast that claims a project was created while the list is unchanged —
+fourteen seeded design defects (no focal point, an empty state with no way
+forward, a toast that claims a project was created while the list is unchanged),
 and **every one of those pages passes all 52 gates**. That is the property that
 makes the number mean something: nothing in the harness can reach these, so
 catching them takes judgement. `node evals/score_critic.mjs` scores a critique
@@ -464,7 +464,7 @@ finished while blocked. `--last` and `--session <id>` print a timeline;
 `--html` writes the same thing as a page. Everything stays on the machine,
 files older than 30 days are deleted, and `DS_OBSERVE=0` turns it off.
 
-Runs are recorded in `evals/RESULTS.md` with their provenance attached — who built the output and whether they could see the kit while doing it — because a run without that context is not evidence of anything.
+Runs are recorded in `evals/RESULTS.md` with their provenance attached: who built the output and whether they could see the kit while doing it, because a run without that context is not evidence of anything.
 
 The eval suite exists because "the kit's own examples pass" is a weaker claim than
 "an agent given only this kit and a brief produces work that passes". Building it
@@ -483,7 +483,7 @@ caught two real defects the 34-check gate had missed. See `evals/README.md`.
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Why PRs are not merged, what to report instead, and how a gate that can still say no is built |
 | [CLAUDE.md](CLAUDE.md) | The always-on brief the agent actually reads |
 | [.claude/rules/](.claude/rules/) | The depth behind it: tokens and colour, type and spacing, components, accessibility, frameworks, review, brand and operations |
-| [taste/](taste/) | The anti-slop doctrine, motion choreography; the 2,144 design systems live in design-systems/, motion choreography |
+| [taste/](taste/) | The anti-slop doctrine and motion choreography. The 2,144 design systems live in [design-systems/](design-systems/) |
 
 ---
 

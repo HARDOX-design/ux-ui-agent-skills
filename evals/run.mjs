@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * EVAL RUNNER — score what an agent actually produced from a cold-start brief.
+ * EVAL RUNNER: score what an agent actually produced from a cold-start brief.
  *
  * The gates in scripts/ prove the kit's own examples are correct. That is not the
  * same question as "does an agent given only this kit and a brief produce good
@@ -60,7 +60,7 @@ if (!existsSync(dir) || !statSync(dir).isDirectory()) {
 
 const files = readdirSync(dir).filter(f => f.endsWith('.html')).map(f => join(dir, f)).sort();
 if (!files.length) {
-  console.error(`\nNo .html files in ${relative(ROOT, dir)} — nothing to measure.\n`);
+  console.error(`\nNo .html files in ${relative(ROOT, dir)}: nothing to measure.\n`);
   process.exit(1);
 }
 const q = (p) => JSON.stringify(relative(ROOT, p));

@@ -64,7 +64,7 @@ assumes you have already made.
 
 Full version and the reasoning: `${CLAUDE_SKILL_DIR}/../../../taste/design-taste.md`.
 
-### Banned defaults — break each one deliberately
+### Banned defaults: break each one deliberately
 
 These are the tells that make UI read as generated. They are defects, not
 starting points.
@@ -118,7 +118,7 @@ styles and layer wider screens on with `min-width`. `max-width` is fine for a
 narrow refinement, never as the way mobile gets supported. Every value a token. Every interactive element ships all eight
 states. Content first, then the layout that serves it.
 
-## 5. Gate — run it, never claim it
+## 5. Gate: run it, never claim it
 
 ```bash
 node ${CLAUDE_SKILL_DIR}/../../../scripts/accuracy_report.mjs

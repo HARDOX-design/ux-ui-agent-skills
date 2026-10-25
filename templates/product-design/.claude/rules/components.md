@@ -85,7 +85,7 @@ font metrics differ per platform. Prove it with `--scale=1.25` and know the caus
 2. A grid or flex item keeps `min-width:auto` and widens its own track. Fix:
    `min-inline-size:0`, or `grid-template-columns:minmax(0,1fr)`.
 3. One unbreakable token (an email, a URL, an API key) sets min-content width. Fix:
-   `overflow-wrap:anywhere` — `break-word` alone does not shrink min-content.
+   `overflow-wrap:anywhere`; `break-word` alone does not shrink min-content.
 4. A `white-space:nowrap` tooltip or pill has no upper bound. Fix: `max-inline-size`.
 
 And the one that hides from screenshots: an absolutely positioned `.sr-only` span

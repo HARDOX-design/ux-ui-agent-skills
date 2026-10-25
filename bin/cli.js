@@ -3,7 +3,7 @@
  * ux-ui-agent-skills installer
  *
  * Copies the design-system skill kit into a target project.
- * Zero dependencies — Node built-ins only.
+ * Zero dependencies: Node built-ins only.
  *
  *   npx ux-ui-skills init [dest]        Install the full kit (default dest: cwd)
  *   npx ux-ui-skills new [dest]         Scaffold a NEW product repo from the starter template
@@ -99,8 +99,8 @@ function systemCount() {
 const NEVER_COPIED = [path.join(ROOT, 'design-systems', 'library')];
 
 const DESC = {
-  claude: 'CLAUDE.md — agent persona & master instructions (+ Request Router)',
-  agentsmd: 'AGENTS.md — the same doctrine for Codex, Cursor, Copilot and ~25 more',
+  claude: 'CLAUDE.md: agent persona & master instructions (+ Request Router)',
+  agentsmd: 'AGENTS.md: the same doctrine for Codex, Cursor, Copilot and ~25 more',
   tokens: `${count('tokens', '.json')} DTCG token files (colors, type, spacing, motion, theming…)`,
   components: `${componentCount()} component specs (atoms → templates + nav/feedback/forms/overlays)`,
   taste: 'Anti-slop doctrine, aesthetic archetypes, motion choreography',
@@ -112,7 +112,7 @@ const DESC = {
   scripts: 'validate_tokens · contrast · design_systems · scaffold_component',
   skills: `${skillCount()} runnable Claude skills (.claude/skills/)`,
   rules: 'Depth split out of CLAUDE.md, loaded on demand (.claude/rules/)',
-  agents: 'design-critic — the adversarial reviewer behind /critique',
+  agents: 'design-critic: the adversarial reviewer behind /critique',
   examples: 'The gated reference output every skill points at as the bar',
   templates: 'Starter layout /scaffold-project generates a new project from',
 };
@@ -164,7 +164,7 @@ let skipped = 0;
 function writeGenerated(dest, text, flags) {
   if (fs.existsSync(dest) && !flags.force) {
     skipped++;
-    console.log(`  ${C.yellow}skip${C.reset} ${path.relative(process.cwd(), dest)} ${C.dim}(exists — use --force)${C.reset}`);
+    console.log(`  ${C.yellow}skip${C.reset} ${path.relative(process.cwd(), dest)} ${C.dim}(exists, use --force)${C.reset}`);
     return;
   }
   if (!flags.dry) {
@@ -202,7 +202,7 @@ function copyRecursive(src, dest, flags) {
   } else {
     if (fs.existsSync(dest) && !flags.force) {
       skipped++;
-      console.log(`  ${C.yellow}skip${C.reset} ${path.relative(process.cwd(), dest)} ${C.dim}(exists — use --force)${C.reset}`);
+      console.log(`  ${C.yellow}skip${C.reset} ${path.relative(process.cwd(), dest)} ${C.dim}(exists, use --force)${C.reset}`);
       return;
     }
     if (!flags.dry) {
@@ -231,7 +231,7 @@ function installAreas(areaKeys, destRoot, flags) {
   }
 }
 
-// `new` — scaffold a product repo: the starter layout + the engine areas it needs.
+// `new` scaffolds a product repo: the starter layout + the engine areas it needs.
 // The template ships CLAUDE.local.md as *.template so this repo's own gitignore
 // cannot swallow it; the suffix is dropped on the way out.
 const TEMPLATE = path.join('templates', 'product-design');
@@ -305,7 +305,7 @@ function cmdList() {
 
 function help() {
   console.log(`
-${C.bold}ux-ui-agent-skills${C.reset} — install the design-system skill kit
+${C.bold}ux-ui-agent-skills${C.reset}: install the design-system skill kit
 
 ${C.bold}Usage${C.reset}
   npx ux-ui-skills ${C.cyan}init${C.reset} [dest]        Install the full kit (default: current dir)
@@ -322,9 +322,9 @@ ${C.bold}Usage${C.reset}
 ${C.bold}Flags${C.reset}
   --agent <which> init only: which instruction surface to install
                   ${C.cyan}claude${C.reset} (default)  CLAUDE.md + .claude/ skills, rules, hooks
-                  ${C.cyan}codex${C.reset}             AGENTS.md — Codex, Cursor, Copilot, Aider, +more
+                  ${C.cyan}codex${C.reset}             AGENTS.md (Codex, Cursor, Copilot, Aider, +more)
                   ${C.cyan}both${C.reset}              both files, held in step by a gate
-                  ${C.cyan}gemini${C.reset}            GEMINI.md + .agents/skills/ — Gemini CLI, Antigravity
+                  ${C.cyan}gemini${C.reset}            GEMINI.md + .agents/skills/ (Gemini CLI, Antigravity)
   --force, -f     Overwrite existing files
   --dry           Show what would be copied, change nothing
   --no-open       demo only: copy the examples but do not launch a browser
@@ -349,11 +349,11 @@ function summary(destRoot, agent) {
   console.log(`\n${C.bold}Done.${C.reset} ${C.green}${copied} copied${C.reset}, ${C.yellow}${skipped} skipped${C.reset} → ${path.relative(process.cwd(), destRoot) || '.'}`);
   console.log(`${C.dim}Design systems arrive when used: npx ux-ui-agent-skills library get <name> (the agent runs scripts/library.mjs itself).${C.reset}`);
   if (agent === 'gemini') {
-    console.log(`${C.dim}Open the folder in Gemini CLI or Antigravity — GEMINI.md loads automatically. Gemini CLI reads .agents/skills/ only in a trusted folder: trust it when asked, then \`gemini skills list\` shows them.${C.reset}\n`);
+    console.log(`${C.dim}Open the folder in Gemini CLI or Antigravity: GEMINI.md loads automatically. Gemini CLI reads .agents/skills/ only in a trusted folder: trust it when asked, then \`gemini skills list\` shows them.${C.reset}\n`);
   } else if (agent === 'codex') {
-    console.log(`${C.dim}Open the folder in Codex, Cursor, Copilot or Aider — AGENTS.md is read automatically. Ask for a screen; the gates live in scripts/.${C.reset}\n`);
+    console.log(`${C.dim}Open the folder in Codex, Cursor, Copilot or Aider: AGENTS.md is read automatically. Ask for a screen; the gates live in scripts/.${C.reset}\n`);
   } else {
-    console.log(`${C.dim}Open the folder in Claude Code — CLAUDE.md loads automatically. Try /design-tokens, /design-code, /apply-aesthetic.${C.reset}\n`);
+    console.log(`${C.dim}Open the folder in Claude Code: CLAUDE.md loads automatically. Try /design-tokens, /design-code, /apply-aesthetic.${C.reset}\n`);
   }
 }
 

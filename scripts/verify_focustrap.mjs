@@ -18,7 +18,7 @@ catch {
   // stays skippable for local convenience; CI and accuracy_report set it to 1, so a
   // machine that cannot render fails loudly instead of reporting green on nothing.
   const required = process.env.DS_REQUIRE_BROWSER === "1";
-  console.log(`verify_focustrap: playwright not installed — ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
+  console.log(`verify_focustrap: playwright not installed: ${required ? "REQUIRED, FAILING" : "SKIPPED"}`);
   process.exit(required ? 1 : 0);
 }
 
@@ -64,7 +64,7 @@ const sem = await page.evaluate(sel => {
 }, dialogSel);
 
 if (!sem.open) {
-  console.log(`verify_focustrap: no visible dialog (${dialogSel}) opened by ${open} — cannot verify`);
+  console.log(`verify_focustrap: no visible dialog (${dialogSel}) opened by ${open}: cannot verify`);
   await browser.close(); process.exit(1);
 }
 if (sem.role !== 'dialog') fails.push(`dialog missing role="dialog" (got ${sem.role})`);
@@ -89,7 +89,7 @@ for (let i = 0; i < steps; i++) {
   }, dialogSel);
   if (!inside) { leaked = true; leakWhere = `after ${i + 1} Tab(s)`; break; }
 }
-if (leaked) fails.push(`focus ESCAPED the dialog ${leakWhere} — keyboard trap leak (WCAG 2.4.3)`);
+if (leaked) fails.push(`focus ESCAPED the dialog ${leakWhere}: keyboard trap leak (WCAG 2.4.3)`);
 
 // Escape closes + returns focus to trigger
 await page.keyboard.press('Escape');
@@ -103,7 +103,7 @@ else if (afterEsc.focusBackOnTrigger === false) fails.push('focus not returned t
 
 await browser.close();
 const mode = dark ? ' [dark]' : '';
-console.log(`focus-trap — ${file}${mode} (dialog had ${sem.count} focusables)`);
+console.log(`focus-trap: ${file}${mode} (dialog had ${sem.count} focusables)`);
 if (fails.length) { console.log('\nFAIL:'); for (const f of fails) console.log('  x ' + f); process.exit(1); }
 console.log('OK: role/aria-modal/name present, Tab stays trapped, Escape closes and returns focus.');
 process.exit(0);

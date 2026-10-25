@@ -82,7 +82,7 @@ def main(argv=()):
         try:
             data = json.loads(f.read_text(encoding="utf-8"))
         except json.JSONDecodeError as e:
-            errors.append(f"{f.name}: invalid JSON — {e}")
+            errors.append(f"{f.name}: invalid JSON: {e}")
             continue
         parsed[f] = data
         flat = flatten(data)
@@ -123,7 +123,7 @@ def main(argv=()):
         if explicit:
             print(f"\nFAIL: {len(unresolved)} unresolved alias(es) in a self-contained token set.")
             return 1
-        print(f"\nWARN: {len(unresolved)} unresolved alias(es) — may reference tokens to be added.")
+        print(f"\nWARN: {len(unresolved)} unresolved alias(es); they may reference tokens to be added.")
         # warnings don't fail the build
     print("\nOK: all token files valid JSON.")
     return 0

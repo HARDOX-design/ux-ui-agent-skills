@@ -5,7 +5,7 @@ description: The house rules for ANY design or UI work - the verification protoc
 
 # Skill: Design Doctrine
 
-> **Step 0 — is the kit here?** This skill reads files from the kit. Check once:
+> **Step 0: is the kit here?** This skill reads files from the kit. Check once:
 > `ls ${CLAUDE_SKILL_DIR}/../../../tokens >/dev/null 2>&1 && echo KIT_OK || echo KIT_MISSING`
 > On `KIT_MISSING` only the skill folders were installed, which is what
 > `npx skills add` does. Say so plainly, point the user at
@@ -113,7 +113,8 @@ use `design-screen`, which runs this preflight as step 1 of the pipeline.
 > ABSOLUTE: zero emoji in any output - UI, code, JSON, copy, comments, commit
 > messages. Not as an icon, a bullet, a status dot, or "polish". Emoji are the
 > number-one tell of machine-generated work. Use a lucide icon (inline SVG,
-> `currentColor`) or plain words. Enforced by `${CLAUDE_SKILL_DIR}/../../../scripts/check_no_emoji.py`.
+> `currentColor`) or plain words. No em dash or en dash either: a colon, a comma or
+> parentheses. Enforced by `${CLAUDE_SKILL_DIR}/../../../scripts/check_no_emoji.py`.
 
 ## The five non-negotiables
 

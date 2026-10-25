@@ -90,7 +90,7 @@ def categories(src):
         if not lines or not lines[0].startswith("# "):
             errors.append(f"{f.name}: no '# <industry>' title on line 1")
             continue
-        cat = lines[0][2:].split(" — ")[0].strip()
+        cat = lines[0][2:].split(" \u2014 ")[0].strip()
         for line in lines:
             if not line.startswith("|"):
                 continue
