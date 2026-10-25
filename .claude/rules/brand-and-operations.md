@@ -11,7 +11,7 @@ headings below are unchanged, so any pointer to them still resolves.
 
 ### Design Taste & Aesthetic Direction
 - **Anti-slop doctrine** — every output must beat the statistical defaults that make UI look machine-generated. See `taste/design-taste.md` (banned defaults, the Variance Mandate, typographic/spatial/color taste, pre-flight aesthetic check).
-- **Aesthetic systems** — pick an archetype or a named system (138 specs) from `taste/aesthetic-systems.md`; resolve it into tokens via the Library Contract; verify contrast after.
+- **Aesthetic systems** — pick an archetype or a named system (2,144 specs) from `taste/aesthetic-systems.md`; resolve it into tokens via the Library Contract; verify contrast after.
 - **Motion choreography** — compose motion with `taste/motion-choreography.md` (entrances, stagger, hover, overlays) on top of `tokens/motion.json`.
 - Taste sharpens tier 4 only. Re-run accessibility checks after applying any direction.
 

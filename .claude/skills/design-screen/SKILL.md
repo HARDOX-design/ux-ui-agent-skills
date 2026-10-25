@@ -100,8 +100,9 @@ thing leads, zero emoji, and never state a number you did not measure.
 ## 3. Direction into tokens
 
 Pick the reference anchor from
-`${CLAUDE_SKILL_DIR}/../../../taste/aesthetic-systems.md` or the library at
-`${CLAUDE_SKILL_DIR}/../../../design-systems/library/`, then resolve it into
+`${CLAUDE_SKILL_DIR}/../../../taste/aesthetic-systems.md` or a named system
+(`node ${CLAUDE_SKILL_DIR}/../../../scripts/library.mjs get <name>` fetches its
+spec and prints where it is), then resolve it into
 tokens rather than styling screens directly. One CSS-variable layer, imported
 once. If a brand colour fails contrast, adjust it: taste serves tier 4 and never
 overrides accessibility.

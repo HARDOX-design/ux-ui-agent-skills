@@ -136,7 +136,7 @@ def main(argv):
         print(f"ERROR: {source} not found")
         return 1
     print(f"Source: {source}")
-    data = json.loads(source.read_text())
+    data = json.loads(source.read_text(encoding="utf-8"))
     dark = data.get("dark") if isinstance(data.get("dark"), dict) else None
     fails = []
     fails += check(data, None, "LIGHT", PAIRS, aaa, True)
@@ -159,4 +159,8 @@ def main(argv):
 
 
 if __name__ == "__main__":
+    # Findings quote what they found (an arrow, an emoji, a Thai name), and a
+    # Windows console in a legacy code page cannot print it.
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     sys.exit(main(sys.argv[1:]))

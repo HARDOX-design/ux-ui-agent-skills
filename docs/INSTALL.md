@@ -15,6 +15,8 @@ forward. Re-run the commands and you should get the same ones.
 |---|---|---|
 | **Claude Code** | `/plugin marketplace add plugin87/ux-ui-agent-skills` | 26 skills, hooks, the critic |
 | **Codex, Cursor, Copilot, Aider** | `npx ux-ui-agent-skills init --agent codex` | `AGENTS.md` + every gate |
+| **Gemini CLI** | `gemini extensions install https://github.com/plugin87/ux-ui-agent-skills` | `GEMINI.md`, 23 ported skills, the MCP server |
+| **Antigravity** (or Gemini CLI, per project) | `npx ux-ui-agent-skills init --agent gemini` | `GEMINI.md` + `.agents/skills/` + every gate |
 | **Any MCP client** | `claude mcp add ux-ui-gates -- npx -y --package=ux-ui-agent-skills ux-ui-mcp` | 6 tools that run the gates |
 | **A terminal, any project** | `brew install plugin87/tap/ux-ui-agent-skills` | the CLI and the MCP binary |
 | **Just looking** | `npx ux-ui-agent-skills demo` | the rendered examples, nothing installed |
@@ -56,7 +58,12 @@ npx ux-ui-agent-skills init --agent codex
 
 Writes `AGENTS.md` at the repository root — an open convention roughly 25 tools
 read without any setup — plus the tokens, component specs, taste doctrine, the
-138 design systems and **all 52 gates**.
+index of the 2,144 design systems and **all 52 gates**.
+
+The specs themselves are fetched when used, not copied: `node scripts/library.mjs
+get <name>` writes one to `design-systems/library/<name>/DESIGN.md` and refuses
+it unless its sha256 matches the index. `npx ux-ui-agent-skills library pull`
+fetches every spec, for a machine that will work offline.
 
 It deliberately does **not** write `.claude/`. Skills, rules and the critic are
 Claude Code mechanisms; on this route they would be dead files.
@@ -69,6 +76,37 @@ between this kit working and not working.
 ```bash
 npx ux-ui-agent-skills init --agent both   # both surfaces, held in step by a gate
 ```
+
+---
+
+## 2b. Gemini CLI and Antigravity
+
+Two routes. Both were run against Gemini CLI 0.65.0.
+
+```bash
+gemini extensions install https://github.com/plugin87/ux-ui-agent-skills   # every project
+npx ux-ui-agent-skills init --agent gemini                                  # this project
+```
+
+**The extension** is an archive attached to each release, which is what
+`gemini extensions install` fetches from a GitHub URL. It carries `GEMINI.md`,
+23 ported skills whose paths Gemini CLI resolves to the extension, and the kit's
+MCP server. Installed into a clean home, `gemini extensions list` showed all 23
+skills and `gemini mcp list` showed the server `Connected`.
+
+**`init --agent gemini`** writes the kit, `GEMINI.md` and the same skills to
+`.agents/skills/`, at the project root, with every path relative to it.
+`--agent antigravity` writes exactly the same. Gemini CLI reads workspace skills
+only in a **trusted folder**: untrusted, `gemini skills list` showed none of
+them; trusted, all 23. Antigravity reads `GEMINI.md` and `.agents/skills/` from
+the same place. That side follows Antigravity's own documentation; it has not
+been driven end to end here.
+
+Three skills stay in Claude Code, because they need it: `critique` runs the
+critic as a forked subagent, `observe` reports what the Claude Code hooks
+recorded, and `scaffold-project` lays out a Claude Code project. There are no
+hooks on this route: as on the `AGENTS.md` surface, every rule is a request and
+the gates run when you run them.
 
 ---
 
@@ -104,7 +142,7 @@ Six tools:
 | `run_gate` | Run one gate, get its output and exit code unedited |
 | `review_ui` | Run every applicable gate, per-gate verdict |
 | `get_doctrine` | The written rules, by topic |
-| `get_design_system` | One of the 138 specs |
+| `get_design_system` | One of the 2,144 specs, fetched on first use and cached |
 | `get_tokens` | The DTCG token source |
 
 `AGENTS.md` lets an agent **read** the doctrine. This lets it **run the gates**,
@@ -166,7 +204,7 @@ The half that does the work never depended on which agent is reading:
   theming, sizing, data-viz
 - **52 component specs** with anatomy, variants, the eight states, token mapping
   and ARIA
-- **138 named design systems**, each a complete spec
+- **2,144 named design systems**, each a complete spec
 - **52 objective gates** — 34 open a real browser, 18 read files
 
 Everything in the gate layer is plain Node and Python. Nothing in it knows which

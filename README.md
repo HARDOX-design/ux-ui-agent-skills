@@ -6,14 +6,14 @@
 
 ### Turn Claude into a **Senior Design Architect** — 15+ years of expertise in design systems, accessibility, and production-ready component engineering.
 
-A comprehensive kit of structured instructions, design tokens, runnable skills, and 138 brand-grade design systems that turn Claude into a UX/UI expert agent — targeting **any framework** and **any design system**. Drop it into any project for consistent, accessible, token-driven design outputs, every time.
+A comprehensive kit of structured instructions, design tokens, runnable skills, and 2,144 design systems (2,087 of them measured from the live site) that turn Claude into a UX/UI expert agent — targeting **any framework** and **any design system**. Drop it into any project for consistent, accessible, token-driven design outputs, every time.
 
 <br>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/brand/xias-cover-dark.png">
   <source media="(prefers-color-scheme: light)" srcset=".github/brand/xias-cover-light.png">
-  <img src=".github/images/hero.png" alt="XIAS - design-system doctrine for coding agents. 52 objective gates, 34 of which open a real browser: WCAG contrast in every state, axe roles and landmarks, keyboard, target size, reduced motion, no horizontal overflow at 280, token by intent, screen economy. 138 design systems, 52 component specs, 26 runnable skills, 14 DTCG token files, 16 framework adapters. Claude Code, Codex, Cursor, Copilot, Aider, MCP." width="900">
+  <img src=".github/images/hero.png" alt="XIAS - design-system doctrine for coding agents. 52 objective gates, 34 of which open a real browser: WCAG contrast in every state, axe roles and landmarks, keyboard, target size, reduced motion, no horizontal overflow at 280, token by intent, screen economy. 2,144 design systems, 52 component specs, 26 runnable skills, 14 DTCG token files, 16 framework adapters. Claude Code, Codex, Cursor, Copilot, Gemini CLI, Antigravity, Aider, MCP." width="900">
 </picture>
 
 <br>
@@ -36,7 +36,7 @@ A comprehensive kit of structured instructions, design tokens, runnable skills, 
 ![Skills](https://img.shields.io/badge/runnable_skills-26-14b8a6?style=flat-square)
 ![Gates](https://img.shields.io/badge/objective_gates-52-16a34a?style=flat-square)
 [![Live demo](https://img.shields.io/badge/live_demo-open-0ea5e9?style=flat-square)](https://plugin87.github.io/ux-ui-agent-skills/)
-![Design Systems](https://img.shields.io/badge/design_systems-138-f97316?style=flat-square)
+![Design Systems](https://img.shields.io/badge/design_systems-2144-f97316?style=flat-square)
 ![Frameworks](https://img.shields.io/badge/frameworks-any-8b5cf6?style=flat-square)
 ![Adapters](https://img.shields.io/badge/framework_adapters-16-22d3ee?style=flat-square)
 ![React 19](https://img.shields.io/badge/React-19-60a5fa?style=flat-square&logo=react)
@@ -201,7 +201,7 @@ The whole log, including what is still unproven, is in
 | **Prototyping & Research** | Guides through a 5-level fidelity ladder, user journey mapping, and usability testing scripts |
 | **Motion Design** | Tokenized durations, easing curves, transition presets, and reduced-motion strategy for accessible animation |
 | **UX Writing** | Voice & tone system with error/empty-state formulas, microcopy patterns, and inclusive language guidelines |
-| **Design Taste** | Native anti-slop doctrine, aesthetic archetypes, and a library of **138 design systems** for layout variance, editorial typography, and premium visual direction |
+| **Design Taste** | Native anti-slop doctrine, aesthetic archetypes, and a library of **2,144 design systems** for layout variance, editorial typography, and premium visual direction |
 
 ---
 
@@ -329,9 +329,17 @@ Drop the kit into any project, no clone needed:
 npx ux-ui-agent-skills init          # full kit into the current folder
 npx ux-ui-agent-skills add tokens taste design-systems   # just some areas
 npx ux-ui-agent-skills list          # see all areas
+npx ux-ui-agent-skills library get stripe   # fetch one design-system spec
 ```
 
 Flags: `--force` (overwrite existing files) · `--dry` (preview, change nothing).
+
+The 2,144 design-system specs are 26MB, and a project uses one or two, so
+`init` does not copy them. It installs an index of every spec with its sha256,
+and the agent fetches the one it picks with `node scripts/library.mjs get
+<name>`. A fetched file whose sha256 does not match the index is refused and
+nothing is written. `library pull` fetches all of them for offline work. The
+plugin (Option A) and a clone carry every spec already.
 
 Working on the kit itself, or want it vendored? [Clone and copy](docs/GUIDE.md#install-from-a-clone) instead.
 
@@ -475,31 +483,39 @@ caught two real defects the 34-check gate had missed. See `evals/README.md`.
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Why PRs are not merged, what to report instead, and how a gate that can still say no is built |
 | [CLAUDE.md](CLAUDE.md) | The always-on brief the agent actually reads |
 | [.claude/rules/](.claude/rules/) | The depth behind it: tokens and colour, type and spacing, components, accessibility, frameworks, review, brand and operations |
-| [taste/](taste/) | The anti-slop doctrine, 138 named design systems, motion choreography |
+| [taste/](taste/) | The anti-slop doctrine, motion choreography; the 2,144 design systems live in design-systems/, motion choreography |
 
 ---
 
 ## Not using Claude Code?
 
 The kit works with **Codex, Cursor, Copilot, Jules, Aider, VS Code and about
-twenty more**, through the open `AGENTS.md` convention.
+twenty more**, through the open `AGENTS.md` convention, and with **Gemini CLI
+and Antigravity**, which read `GEMINI.md` and `.agents/skills/`.
 
 ```bash
 npx ux-ui-agent-skills init --agent codex    # AGENTS.md + the whole kit
-npx ux-ui-agent-skills init --agent both     # both surfaces
+npx ux-ui-agent-skills init --agent gemini   # GEMINI.md + 23 ported skills: Gemini CLI, Antigravity
+npx ux-ui-agent-skills init --agent both     # CLAUDE.md and AGENTS.md
 npx ux-ui-agent-skills init                  # Claude Code (default)
+gemini extensions install https://github.com/plugin87/ux-ui-agent-skills   # Gemini CLI, every project
 ```
 
 What transfers, and what does not, stated exactly:
 
-| | Claude Code | AGENTS.md surface |
-|---|---|---|
-| Tokens, components, taste, accessibility, 138 design systems | yes | **yes** |
-| All 52 gates | yes | **yes** - they are plain Node and Python |
-| Doctrine: the eight states, token by intent, mobile-first, the house rules | yes | **yes** |
-| 26 skills that load on demand | yes | no, the doctrine is inlined instead |
-| Hooks that fire whether or not the model remembers | yes | **no** |
-| `/critique` in a separate context | yes | no, it is a step in the instructions |
+| | Claude Code | AGENTS.md surface | Gemini CLI, Antigravity |
+|---|---|---|---|
+| Tokens, components, taste, accessibility, 2,144 design systems | yes | **yes** | **yes** |
+| All 52 gates | yes | **yes** - they are plain Node and Python | **yes** |
+| Doctrine: the eight states, token by intent, mobile-first, the house rules | yes | **yes** | **yes**, in `GEMINI.md` |
+| 26 skills that load on demand | yes | no, the doctrine is inlined instead | 23 ported skills |
+| Hooks that fire whether or not the model remembers | yes | **no** | **no** |
+| `/critique` in a separate context | yes | no, it is a step in the instructions | no |
+
+A skill is ported, not copied: Gemini CLI and Antigravity do not expand
+`${CLAUDE_SKILL_DIR}`, so each path is rewritten for where the skill lands, and
+the three that need Claude Code (`critique`, `observe`, `scaffold-project`) stay
+there. Setup and what was measured: [docs/INSTALL.md](docs/INSTALL.md#2b-gemini-cli-and-antigravity).
 
 **The hooks are the real difference.** On Claude Code, three rules are enforced
 without the model choosing to: no hardcoded values and no emoji on every write,

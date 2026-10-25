@@ -23,6 +23,8 @@
 |---|---|---|
 | **Claude Code** | `/plugin marketplace add plugin87/ux-ui-agent-skills` | ครบที่สุด มีตัวบังคับอัตโนมัติ |
 | **Codex, Cursor, Copilot** | `npx ux-ui-agent-skills init --agent codex` | ได้ความรู้กับเครื่องมือตรวจครบ |
+| **Gemini CLI** | `gemini extensions install https://github.com/plugin87/ux-ui-agent-skills` | `GEMINI.md`, skill ที่แปลงแล้ว 23 ตัว, MCP server |
+| **Antigravity** (หรือ Gemini CLI รายโปรเจกต์) | `npx ux-ui-agent-skills init --agent gemini` | `GEMINI.md` + `.agents/skills/` + เครื่องมือตรวจครบ |
 | **MCP client อื่นๆ** | `claude mcp add ux-ui-gates -- npx -y --package=ux-ui-agent-skills ux-ui-mcp` | เรียกเครื่องมือตรวจเป็น tool ได้ |
 | **อยากได้คำสั่งในเครื่อง** | `brew install plugin87/tap/ux-ui-agent-skills` | ใช้ได้ทุกโปรเจกต์ |
 | **แค่อยากลองดู** | `npx ux-ui-agent-skills demo` | เปิดตัวอย่างดู ไม่ติดตั้งอะไร |
@@ -55,8 +57,13 @@ npx ux-ui-agent-skills init --agent codex
 ```
 
 สร้างไฟล์ `AGENTS.md` ไว้ที่รากโปรเจกต์ — เป็นมาตรฐานเปิดที่เครื่องมือราว 25 ตัว
-อ่านได้โดยไม่ต้องตั้งค่าอะไร พร้อม token, สเปกคอมโพเนนต์, ดีไซน์ซิสเต็ม 138 ชุด
+อ่านได้โดยไม่ต้องตั้งค่าอะไร พร้อม token, สเปกคอมโพเนนต์, สารบัญของดีไซน์ซิสเต็ม 2,144 ชุด
 และ **เครื่องมือตรวจครบทั้ง 52 ตัว**
+
+ตัวสเปกไม่ได้ copy มาทั้งหมด จะดึงมาเฉพาะชุดที่ใช้: `node scripts/library.mjs get <ชื่อ>`
+จะเขียนไฟล์ไว้ที่ `design-systems/library/<ชื่อ>/DESIGN.md` และจะไม่ยอมเขียนถ้า sha256
+ไม่ตรงกับสารบัญ ถ้าต้องทำงานแบบไม่มีเน็ต สั่ง `npx ux-ui-agent-skills library pull`
+เพื่อดึงมาครบทุกชุด
 
 มันจงใจ**ไม่**สร้างโฟลเดอร์ `.claude/` เพราะ skills กับ hooks เป็นกลไกของ Claude Code
 ถ้าใส่มาก็เป็นไฟล์ตายๆ
@@ -72,6 +79,35 @@ npx ux-ui-agent-skills init --agent codex
 ```bash
 npx ux-ui-agent-skills init --agent both
 ```
+
+---
+
+## 2b. Gemini CLI และ Antigravity
+
+มีสองทาง ทั้งสองทางลองกับ Gemini CLI 0.65.0 จริงแล้ว
+
+```bash
+gemini extensions install https://github.com/plugin87/ux-ui-agent-skills   # ใช้ได้ทุกโปรเจกต์
+npx ux-ui-agent-skills init --agent gemini                                  # เฉพาะโปรเจกต์นี้
+```
+
+**แบบ extension** คือไฟล์ที่แนบไว้กับทุก release ซึ่ง `gemini extensions install`
+ดึงมาเองเมื่อให้ลิงก์ GitHub ข้างในมี `GEMINI.md`, skill ที่แปลงแล้ว 23 ตัว
+(Gemini CLI แปลง path ให้ชี้เข้าไปใน extension เอง) และ MCP server ของ kit
+ตอนลองติดตั้งในเครื่องที่ไม่มีอะไรเลย `gemini extensions list` เห็น skill ครบ 23 ตัว
+และ `gemini mcp list` ขึ้นว่า `Connected`
+
+**แบบ `init --agent gemini`** จะลง kit, `GEMINI.md` และ skill ชุดเดียวกันไว้ใน
+`.agents/skills/` ที่รากโปรเจกต์ path ทุกอันนับจากรากโปรเจกต์ ส่วน `--agent antigravity`
+ได้ผลเหมือนกันทุกไฟล์ Gemini CLI จะอ่าน skill ในโปรเจกต์ก็ต่อเมื่อ**ไว้ใจโฟลเดอร์นั้นแล้ว**
+(ตอนยังไม่ไว้ใจ `gemini skills list` ไม่เห็นเลยสักตัว พอไว้ใจแล้วเห็นครบ 23 ตัว)
+Antigravity อ่าน `GEMINI.md` กับ `.agents/skills/` จากที่เดียวกัน ฝั่งนี้ทำตามเอกสารของ
+Antigravity เอง แต่ยังไม่ได้ลองใช้งานจริงตั้งแต่ต้นจนจบ
+
+มี 3 skill ที่ใช้ได้แค่ใน Claude Code: `critique` ต้องแยก critic ไปทำงานใน subagent,
+`observe` อ่านสิ่งที่ hook ของ Claude Code บันทึกไว้ และ `scaffold-project` สร้างโครง
+โปรเจกต์แบบ Claude Code ทางนี้ไม่มี hook เหมือนกับทาง `AGENTS.md` ทุกกฎเป็นแค่คำขอ
+และเครื่องมือตรวจจะทำงานก็ต่อเมื่อสั่งรัน
 
 ---
 
@@ -93,7 +129,7 @@ claude mcp add ux-ui-gates -- npx -y --package=ux-ui-agent-skills ux-ui-mcp
 | `run_gate` | สั่งตรวจทีละตัว ได้ผลดิบๆ กลับมา |
 | `review_ui` | ตรวจทุกตัวที่เกี่ยวข้องทีเดียว |
 | `get_doctrine` | ขอหลักการเขียนดีไซน์ แยกตามหัวข้อ |
-| `get_design_system` | ขอสเปกดีไซน์ซิสเต็ม 1 ใน 138 ชุด |
+| `get_design_system` | ขอสเปกดีไซน์ซิสเต็ม 1 ใน 2,144 ชุด (ดึงครั้งแรกที่ขอ แล้วเก็บ cache) |
 | `get_tokens` | ขอ token ตั้งต้น |
 
 `AGENTS.md` ให้เอเจนต์ **อ่าน** หลักการได้ ส่วน MCP ให้มัน **รันเครื่องมือตรวจ** ได้
@@ -146,7 +182,7 @@ npx ux-ui-agent-skills list        # ดูว่ามีอะไรให้�
 
 - **ไฟล์ token 14 ไฟล์** รูปแบบ DTCG — สี ตัวอักษร ระยะห่าง การเคลื่อนไหว ธีม ขนาด กราฟ
 - **สเปกคอมโพเนนต์ 52 ชิ้น** พร้อมโครงสร้าง ตัวแปร สถานะทั้ง 8 และ ARIA
-- **ดีไซน์ซิสเต็ม 138 ชุด** แต่ละชุดเป็นสเปกเต็ม
+- **ดีไซน์ซิสเต็ม 2,144 ชุด** แต่ละชุดเป็นสเปกเต็ม
 - **เครื่องมือตรวจ 52 ตัว** — 34 ตัวเปิดเบราว์เซอร์จริง อีก 18 ตัวอ่านไฟล์
 
 ทั้งหมดเป็น Node กับ Python ธรรมดา ไม่มีตัวไหนรู้ว่าใครเรียกมัน

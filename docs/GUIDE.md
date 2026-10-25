@@ -108,7 +108,7 @@ Each `SKILL.md` carries an `invocation` field, so it is clear which ones you dri
 | `/design-code` | Generate code for any framework via the Adapter Protocol |
 | `/design-review` | Score a design across 6 dimensions plus Nielsen, with a findings table |
 | `/a11y-audit` | WCAG 2.2 audit and contrast checks |
-| `/apply-aesthetic` | Apply an archetype or one of 138 named design systems |
+| `/apply-aesthetic` | Apply an archetype or one of 2,144 named design systems |
 | `/design-qa` | Stand up the CI gates that keep regressions out |
 | `/ux-writing` | Write or review buttons, errors, empty states, microcopy |
 | `/token-build` | Tokens to CSS, Tailwind, iOS, Android, Compose |
@@ -135,7 +135,7 @@ python3 scripts/contrast.py "#1d1d1f" "#ffffff"    # WCAG contrast ratio for one
 python3 scripts/validate_component_spec.py         # every component spec is complete
 python3 scripts/lint_hardcodes.py src/             # no off-theme hex/px/timing (consistency)
 python3 scripts/lint_taste.py page.html            # heuristic anti-slop taste check
-python3 scripts/design_systems.py list             # browse the 138-system library
+python3 scripts/design_systems.py list             # browse the 2,144-system library
 python3 scripts/scaffold_component.py "Date Picker" # emit a component spec stub
 python3 scripts/validate_template.py               # the starter template stays sound
 python3 scripts/validate_instruction_surface.py    # no always-on rule got demoted
@@ -191,7 +191,7 @@ These are the same gates CI runs (`.github/workflows/ci.yml`) — token validity
 ├── scripts/                   # Real helper scripts (python3, no deps)
 │   ├── validate_tokens.py     # JSON + alias validation for tokens/
 │   ├── contrast.py            # WCAG 2.2 contrast-ratio checker
-│   ├── design_systems.py      # Browse/search the 138-system library
+│   ├── design_systems.py      # Browse/search the 2,144-system library
 │   └── scaffold_component.py  # Emit a component spec stub
 │
 ├── tokens/                    # Design tokens (DTCG format) — 13 files
@@ -200,14 +200,14 @@ These are the same gates CI runs (`.github/workflows/ci.yml`) — token validity
 │
 ├── taste/                     # Aesthetic judgment layer
 │   ├── design-taste.md        # Anti-slop doctrine, banned defaults, pre-flight check
-│   ├── aesthetic-systems.md   # Archetypes + catalog of 138 design systems
+│   ├── aesthetic-systems.md   # Archetypes, the Library Contract, how to find a system
 │   └── motion-choreography.md # Motion grammar + reduced-motion parity
 │
 ├── design-systems/            # Interop + brand library
 │   ├── interop-protocol.md    # Map to/from ANY design system
 │   ├── crosswalk.md           # Material 3 · Apple HIG · Fluent · Carbon · shadcn · Radix
 │   │                          # · Ant · Polaris · Primer · Atlassian · Bootstrap
-│   └── library/<name>/        # 138 brand-grade DESIGN.md specs
+│   └── library/<name>/        # 2,144 DESIGN.md specs (catalog.md lists them)
 │
 ├── content/                   # UX writing & content design
 │   └── voice-tone.md          # Voice & tone, error/empty-state copy, microcopy, inclusive language
@@ -236,7 +236,7 @@ These are the same gates CI runs (`.github/workflows/ci.yml`) — token validity
 ```
 
 > [!NOTE]
-> The **design-taste layer** (`taste/`) and the **138-system library** (`design-systems/library/`) set visual direction; the **system** (tokens, components, accessibility) keeps it correct. Taste serves the Aesthetics tier and never overrides accessibility. Skills under `.claude/skills/` run with agent permissions — review before use.
+> The **design-taste layer** (`taste/`) and the **2,144-system library** (`design-systems/library/`) set visual direction; the **system** (tokens, components, accessibility) keeps it correct. Taste serves the Aesthetics tier and never overrides accessibility. Skills under `.claude/skills/` run with agent permissions — review before use.
 
 ---
 
@@ -289,7 +289,7 @@ The [**Framework Adapter Protocol**](../frameworks/adapter-protocol.md) defines 
 ## Design-System Interop — *any*
 
 
-Adopt, build on, or migrate between external design systems via a role-based crosswalk ([interop-protocol](../design-systems/interop-protocol.md) + [crosswalk](../design-systems/crosswalk.md)). Curated tables: **Material Design 3 · Apple HIG · Fluent 2 · Carbon · shadcn/ui · Radix** (others derived on demand). Plus a **library of 138 brand-grade design systems** (apple, linear, stripe, vercel, notion, spotify, tesla…) under `design-systems/library/`.
+Adopt, build on, or migrate between external design systems via a role-based crosswalk ([interop-protocol](../design-systems/interop-protocol.md) + [crosswalk](../design-systems/crosswalk.md)). Curated tables: **Material Design 3 · Apple HIG · Fluent 2 · Carbon · shadcn/ui · Radix** (others derived on demand). Plus a **library of 2,144 design systems** (apple, linear, stripe, vercel, notion, spotify, tesla…) under `design-systems/library/`.
 
 ---
 

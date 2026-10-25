@@ -46,7 +46,7 @@ looks like. Very little can tell it, afterwards, that the contrast it shipped is
 | `run_gate` | Run one gate against paths. Returns the gate's own output and exit code, unedited. |
 | `review_ui` | Run every applicable gate and report a per-gate verdict, with the full output of each failure. |
 | `get_doctrine` | The written rules, by topic: tokens, typography, components, accessibility, frameworks, taste, review, brand, agents. |
-| `get_design_system` | One of the brand-grade `DESIGN.md` specs, or the list of them. |
+| `get_design_system` | One of the brand-grade `DESIGN.md` specs, or the list of them. Run from npm, the server fetches a spec the first time it is asked for, refuses it unless its sha256 matches the index the package ships, and caches it under `$XDG_CACHE_HOME` (default `~/.cache`)`/ux-ui-agent-skills/<tag>/`. |
 | `get_tokens` | The DTCG token source, as a starting point for a project theme. |
 
 The intended order is `get_doctrine` and `get_tokens` **before** generating,

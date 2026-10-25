@@ -189,7 +189,7 @@ def main(argv):
     unreadable = []
     for f in files:
         try:
-            text = f.read_text()
+            text = f.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError) as err:
             # Swallowing this counted the file as scanned and let the run exit 0
             # having never opened it - the same shape as the missing-path guard
@@ -251,4 +251,8 @@ def main(argv):
 
 
 if __name__ == "__main__":
+    # Findings quote what they found (an arrow, an emoji, a Thai name), and a
+    # Windows console in a legacy code page cannot print it.
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     sys.exit(main(sys.argv[1:]))

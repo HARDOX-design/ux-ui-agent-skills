@@ -71,7 +71,7 @@ def main(argv):
     if out:
         out = out if out.is_absolute() else ROOT / out
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(body)
+        out.write_text(body, encoding="utf-8")
         print(f"Wrote {out}")
     else:
         print(body)
@@ -79,4 +79,8 @@ def main(argv):
 
 
 if __name__ == "__main__":
+    # Findings quote what they found (an arrow, an emoji, a Thai name), and a
+    # Windows console in a legacy code page cannot print it.
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     sys.exit(main(sys.argv[1:]))

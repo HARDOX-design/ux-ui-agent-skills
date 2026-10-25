@@ -178,8 +178,10 @@ They are defects, not starting points.
   lorem ipsum)
 - Cramped vertical rhythm between sections
 
-Depth: `taste/design-taste.md`, and 138 named systems in
-`taste/aesthetic-systems.md` and `design-systems/library/`.
+Depth: `taste/design-taste.md`, and 2,144 named systems in
+`taste/aesthetic-systems.md`. Find one with `python3 scripts/design_systems.py
+search <term>`, then `node scripts/library.mjs get <name>` fetches its spec
+(an npm install carries none until asked) and prints where it is.
 
 ---
 

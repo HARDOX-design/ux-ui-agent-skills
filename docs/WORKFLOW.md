@@ -65,7 +65,7 @@ Claude does **not** read every file on every request (that would waste context).
 | Code in any framework | `frameworks/adapter-protocol.md` → the matching adapter |
 | A design review / audit | `workflows/design-review.md` + `taste/` |
 | An accessibility check | `accessibility/*` + `scripts/contrast.py` |
-| A specific look / vibe | `taste/` + one of 138 design systems |
+| A specific look / vibe | `taste/` + one of 2,144 design systems |
 
 This is what makes the kit feel "intelligent" — it self-routes instead of dumping a flat file list into context.
 

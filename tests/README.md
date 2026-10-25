@@ -64,7 +64,13 @@ directory exists to prevent.
   `validate_instruction_surface.py`, `validate_template.py` - take `--root` now,
   and `meta/root-scoped.test.mjs` uses it to show each one refusing a broken
   copy. `accuracy_report.mjs` is the runner itself, so pointing it elsewhere is a
-  different feature; `design_systems.py` reads a library that only exists here.
+  different feature. `design_systems.py` reads the index an install carries;
+  its `catalog` and `index` output are generated from specs only the repo has.
+- **The library is tested from the tarball, not the repo.** The repo has every
+  spec on disk, so a test run from it passes whether or not fetching works.
+  `cli/library.test.mjs` unpacks `npm pack`, points the loader at a local server
+  that serves a spec intact, one byte off, or not at all, and checks the refusal
+  as hard as the success.
 - **`build_tokens.mjs` is a generator first.** Without `--check` it still writes
   what it can and exits 0, because that is what a generator should do; the gate
   runs it with `--check`, which turns a dropped reference into a failure. `unit/`

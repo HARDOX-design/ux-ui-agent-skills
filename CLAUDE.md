@@ -57,7 +57,7 @@ Match the request to the files to load (and the runnable skill, invocable via `/
 | Generate code in any framework | `design-code` | `frameworks/adapter-protocol.md` → `frameworks/` + `frameworks/adapters/*`, `components/*` |
 | Review / audit / score a design | `design-review` | `workflows/design-review.md`, `taste/design-taste.md` |
 | Accessibility / WCAG / contrast check | `a11y-audit` | `accessibility/*`; `scripts/contrast.py` |
-| Apply a look / vibe / brand feel | `apply-aesthetic` | `taste/aesthetic-systems.md`, `design-systems/library/*`; `scripts/design_systems.py` |
+| Apply a look / vibe / brand feel | `apply-aesthetic` | `taste/aesthetic-systems.md`, `design-systems/library/*`; `scripts/design_systems.py`, `scripts/library.mjs` |
 | Reference image / screenshot / mockup → matching code | `image-to-code` | `taste/*`, `design-tokens` + `design-code`; `scripts/measure_render.mjs`, `scripts/taste_audit.mjs` |
 | Build a brand design system / foundation from scratch | `brandkit` | "Token System" + "Color Generation", `taste/aesthetic-systems.md`; `scripts/validate_contrast.py` |
 | Improve/modernize an existing UI | `redesign` | `workflows/redesign-audit.md`, `taste/*` |
@@ -200,14 +200,15 @@ tokens/                   ← Design tokens (DTCG $type/$value)
 
 taste/                    ← Aesthetic judgment layer (serves the Aesthetics tier)
 ├── design-taste.md       ← Anti-slop doctrine, banned defaults, pre-flight aesthetic check
-├── aesthetic-systems.md  ← Archetypes + catalog of 138 named design systems
+├── aesthetic-systems.md  ← Archetypes, the Library Contract, how to find a system
 └── motion-choreography.md← Scroll/hover/overlay motion grammar + reduced-motion parity
 
 design-systems/           ← Interop + brand library
 ├── interop-protocol.md   ← Map to/from ANY design system (crosswalk method)
 ├── crosswalk.md          ← Curated tables: Material 3, Apple HIG, Fluent, Carbon, shadcn, Radix,
 │                            Ant, Polaris, Primer, Atlassian, Bootstrap
-└── library/<name>/DESIGN.md ← 138 brand-grade design-system specs
+├── library.json          ← Index + sha256 of every spec; an npm install fetches specs on use
+└── library/<name>/DESIGN.md ← 2,144 design-system specs (catalog.md lists them)
 
 content/
 └── voice-tone.md         ← Voice & tone, UX writing, error/empty-state copy, microcopy patterns
@@ -305,7 +306,7 @@ scripts/                  ← validate_tokens.py [file|dir] · contrast.py · va
                               stylesheets; every class it emits must resolve, then the render gates run on the
                               output. SSR only: what the components PRODUCE, not what they do on a click)
                             · accuracy_report.mjs (one-command 100%-or-fail: all gates + real render + states)
-                            · design_systems.py · scaffold_component.py
+                            · design_systems.py · library.mjs (get a spec) · scaffold_component.py
 evals/                    ← Cold-start briefs + `run.mjs`: point every objective gate at what an
                             agent produced from a brief. Scores correctness, refuses to score taste.
 
