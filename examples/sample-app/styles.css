@@ -110,8 +110,8 @@
 }
 /* Feedback tokens, not action tokens: a delta reports, it is not something you
    can click. --color-action-primary here measured 3.43:1 on the dark card. */
-.card__delta--up { color: var(--color-success); font-size: var(--text-sm); }
-.card__delta--down { color: var(--color-feedback-error); font-size: var(--text-sm); }
+.card__delta--up { color: var(--color-feedback-success-icon); font-size: var(--text-sm); }
+.card__delta--down { color: var(--color-feedback-error-icon); font-size: var(--text-sm); }
 
 /* button (shared primitive) */
 .btn {

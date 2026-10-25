@@ -63,7 +63,7 @@ Build mobile-first; a fixed-px width that can't shrink is a bug. Run `node ${CLA
 ## Motion — tokenized, real easing, animate the thing that moves
 Timing/easing are tokens (`--duration-fast|normal|slow`, `--ease-out|in|in-out|emphasized` in the theme; `--transition-micro` = `fast ease-out`). Never hardcode ms/curves. A component that toggles open/closed must animate its **height**, not just rotate a chevron — collapse via `hidden`/`display:none` alone reads as "rigid, no transition". Smooth-height pattern (no JS measuring): wrap content in an inner that clips overflow, animate the grid track:
 ```css
-.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--duration-normal) var(--ease-emphasized)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--duration-base) var(--ease-spring)}
 .panel.open{grid-template-rows:1fr}
 .panel > .inner{overflow:hidden;min-block-size:0}
 ```

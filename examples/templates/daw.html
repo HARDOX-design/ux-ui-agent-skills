@@ -58,7 +58,7 @@
     background:transparent;color:var(--lin-ink-3);font:600 .625rem/1 var(--font-mono);cursor:pointer}
   .tg:hover{color:var(--lin-ink)}
   .tg:focus-visible{outline:var(--ring-w) solid var(--lin-accent);outline-offset:var(--space-1)}
-  .tg[aria-pressed="true"]{background:var(--color-feedback-warning);color:var(--lin-canvas);border-color:transparent}
+  .tg[aria-pressed="true"]{background:var(--color-feedback-warning-icon);color:var(--lin-canvas);border-color:transparent}
   .strip{position:relative;block-size:2.25rem;border-radius:var(--radius-sm);background:var(--lin-raised);
     min-inline-size:0;overflow:hidden}
   .clip{position:absolute;inset-block:2px;inset-inline-start:var(--l);inline-size:var(--w); /* ds-allow-hardcode: the inset is the lane gutter that keeps a bar off its track edge - below the 4px spacing step on purpose */
@@ -91,7 +91,7 @@
   .meter{inline-size:.5rem;block-size:7rem;border-radius:var(--radius-full);background:var(--lin-raised);
     position:relative;overflow:hidden}
   .meter i{position:absolute;inset-inline:0;inset-block-end:0;block-size:var(--v);
-    background:linear-gradient(0deg,var(--trm-accent),var(--color-feedback-warning))}
+    background:linear-gradient(0deg,var(--trm-accent),var(--color-feedback-warning-icon))}
   /* rotate() leaves the layout box horizontal, so six rotated faders pushed the
      page 388px sideways. writing-mode gives a real vertical range whose box is
      vertical too. */

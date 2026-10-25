@@ -36,13 +36,15 @@ Never delete silently. Deprecate, then remove:
 3. **Migrate** — provide a mapping (old → new) and, where possible, a codemod or `design-systems/crosswalk.md`-style table.
 4. **Remove** — only in a **major** release, after the window, with the removal listed in the changelog.
 
-### In force now: the short token names, removed in 3.0.0
+### Removed in 3.0.0: the short token names
 
 The harnesses in `examples/` grew a shorter vocabulary than `tokens/*.json`
 emits, so a theme generated from the token source did not define the names the
 harnesses used, and anyone who copied one got an undefined variable and no
-warning. `scripts/build_tokens.mjs` emits both names through the window; the
-alias block is one deletion in 3.0.0.
+warning. From 2.x, `scripts/build_tokens.mjs` emitted both names; 3.0.0 moved
+every page, skill and script the kit ships to the replacement and stopped
+emitting the old one. A theme or page of your own that still uses a name on the
+left needs the name on the right; nothing else about the value changed.
 
 | Deprecated | Replacement |
 |---|---|
@@ -57,10 +59,15 @@ alias block is one deletion in 3.0.0.
 | `--duration-normal` | `--duration-base` |
 | `--ease-emphasized` | `--ease-spring` |
 
-An alias is a rename, so it must resolve to the colour the old name meant.
-Writing `--color-action-danger: var(--color-action-primary)` would emit a blue
-Delete from the token build itself; `unit/build-tokens.test.mjs` pins the
-direction and asserts destructive and primary are never the same colour.
+The rename was proven on the render, not assumed: all 49 example pages, light,
+dark and `data-theme="dark"`, before and after. Every colour, duration and easing
+resolved to the same value under the new name. The one value that moved is
+`--radius-pill` in the brandkit theme, 980px, which became `--radius-full`,
+9999px: on every element it shaped, the screenshot came out byte-identical.
+`unit/build-tokens.test.mjs` asserts the build emits none of the old names, that
+nothing the kit ships uses one, and that destructive and primary are never the
+same colour. `lint_intent.mjs` still reads `--color-action-danger`, because it
+measures your project, which may not have moved yet.
 
 **Still unmapped, and not aliases:** `--color-surface-inverse`,
 `--color-surface-brand`, `--color-text-inverse` and `--color-chart-track` have
