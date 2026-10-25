@@ -10,6 +10,101 @@ with auto-generated notes instead.
 
 ---
 
+### `v3.0.0`
+
+**2,144 design systems, fetched when you use one. Gemini CLI and Antigravity.
+And the ten short token names deprecated in 2.x are gone**, which is why this is
+a major version. Read "Breaking" below before you upgrade a project that uses
+CSS built by `build_tokens`.
+
+**Breaking: the short token names are removed.** Since 2.x,
+`scripts/build_tokens.mjs` emitted ten short names as aliases next to the token
+source's own names. It no longer does. A theme or page that still uses a name on
+the left gets an undefined variable and has to use the name on the right. The
+value behind each name is unchanged.
+
+| Removed | Use instead |
+|---|---|
+| `--color-action-danger` | `--color-action-destructive` |
+| `--color-action-danger-hover` | `--color-action-destructive-hover` |
+| `--color-text-error` | `--color-feedback-error-text` |
+| `--color-feedback-error` | `--color-feedback-error-icon` |
+| `--color-feedback-success` | `--color-feedback-success-icon` |
+| `--color-feedback-warning` | `--color-feedback-warning-icon` |
+| `--color-success` | `--color-feedback-success-icon` |
+| `--radius-pill` | `--radius-full` |
+| `--duration-normal` | `--duration-base` |
+| `--ease-emphasized` | `--ease-spring` |
+
+Every page, skill and script the kit ships moved first (190 renames), and the
+move was checked on the render, not assumed. All 49 example pages were rendered
+in light, dark and `data-theme="dark"`, before and after the move. Every colour,
+duration and easing resolved to the same value under the new name. One value
+moved: the brandkit theme's `--radius-pill`, 980px, became `--radius-full`,
+9999px. Every screenshot of an element it shapes came out byte-identical.
+`lint_intent.mjs` still reads `--color-action-danger`, because it checks your
+project, which may not have moved yet. The same table is in
+`workflows/governance.md`, under "Removed in 3.0.0".
+
+**The library: 2,144 design systems, up from 138.**
+- **npm.** The package ships an index, `design-systems/library.json`. It holds
+  each spec's name, category, description, size and sha256, but no spec text.
+  When a spec is needed, it is fetched from this repository at the release tag
+  (`ref`) by `npx ux-ui-skills library get <name>`, or all of them by
+  `library pull`. The fetch tries GitHub raw first, then jsDelivr. A spec whose
+  bytes do not match the index is refused and nothing is written.
+- **Package size.** Measured with `npm pack --dry-run`, the 3.0.0 package is
+  3,870,316 bytes packed and 6,095,980 unpacked, in 282 files. 2.10.0, as the
+  registry reports it, was 6,401,000 bytes unpacked in 416 files, and it carried
+  138 specs.
+- **MCP server.** `get_design_system` lists from the index. Run from npm, it
+  fetches a spec the first time one is asked for, checks it the same way, and
+  caches it under `$XDG_CACHE_HOME` (default `~/.cache`)`/ux-ui-agent-skills/<tag>/`.
+- **Plugin and git clone.** Both still carry every spec locally. Nothing is
+  fetched.
+- **`design_systems.py`** lists and searches the index too. `show` on a spec
+  this install does not have yet prints the command that fetches it.
+
+**Gemini CLI and Antigravity.**
+- **Gemini CLI.** `gemini extensions install
+  https://github.com/plugin87/ux-ui-agent-skills` installs an extension:
+  `GEMINI.md`, 23 ported skills and the MCP server. The extension is built by
+  `release.yml` and attached to the release as its only asset. It cannot live at
+  the repository root as `skills/`, because Claude Code would load those skills
+  as well as its own (measured with `claude plugin details`, 2.1.310).
+- **Per project.** `npx ux-ui-skills init --agent gemini` (or `--agent
+  antigravity`, which writes the same files) installs `GEMINI.md`,
+  `.agents/skills/` and every gate. Gemini CLI reads workspace skills only in a
+  trusted folder: untrusted it loaded none of them, trusted all 23.
+- **What porting a skill means.** A skill's paths are rewritten for where it
+  lands, because neither tool expands `${CLAUDE_SKILL_DIR}`. `critique`,
+  `observe` and `scaffold-project` need Claude Code, so they are left out, each
+  with its reason in `bin/port-skills.js`.
+- **What was run.** The extension and the workspace install were both run
+  against Gemini CLI 0.65.0: the extension validated, listed 23 skills, and its
+  MCP server connected. Antigravity was not driven end to end. That half follows
+  its documentation: it reads `GEMINI.md` and `.agents/skills/`, and truncates a
+  rule file at 24,000 bytes. A test holds `GEMINI.md` under that limit.
+
+**Python scripts work on a non-UTF-8 console.** Every script reads and writes
+text files as UTF-8 and sets its own output to UTF-8. This matters because
+findings quote what they found: an arrow, an emoji, a Thai name. On a Windows
+console in a legacy code page, printing one crashed the script. The fixtures
+that reproduced the crash now run under `PYTHONIOENCODING=ascii` in
+`unit/encoding.test.mjs`.
+
+**Not measured yet.** These need the `v3.0.0` tag to exist on GitHub, and are
+checked after the release:
+- fetching all 2,144 specs from the tag;
+- `gemini extensions install` from the release asset.
+
+So far, 138 specs fetched from `v2.10.0` in 6.6 seconds, each sha256-checked.
+
+**Includes 2.10.1.** Version 2.10.1 below was never published to npm. Its fixes
+reach npm in this release.
+
+---
+
 ### `v2.10.1`
 
 **The skills work on a plugin install, and no skill can read a skipped gate
