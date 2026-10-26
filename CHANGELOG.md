@@ -10,6 +10,34 @@ with auto-generated notes instead.
 
 ---
 
+### Unreleased
+
+On the live demo now, in the next npm release.
+
+**Five websites, not only dashboards.** `examples/sites/` holds a product launch,
+a two-page shop, a long read in Thai, a neighbourhood restaurant and a Thai public
+service page. Each takes its visual language from one design system in the
+library, every brand, person and figure on them is fictional and says so, and each
+page passes the same gates as every other example. The design critic reviewed all
+five and each was revised against its findings.
+
+**Spacing is a rule, and a gate.** `.claude/rules/components.md` has a new section,
+"Spacing: rows, gaps and gutters", and `scripts/verify_spacing.mjs` measures the
+two parts of it that can be measured on the render:
+- **Rows of cards share a height.** Boxed siblings that start on one line end on
+  one line. An item that spans two grid rows is not compared.
+- **Nothing touches.** A control, badge or card keeps 8px from its neighbour,
+  stacked or side by side, including after a row wraps; a label may sit 4px from
+  its own field, and the segments of one control may join inside its box.
+
+"One relationship, one gap" and "one gutter" are in the rule and are read by the
+critic, not the gate: both were tried on all 56 example pages and both failed good
+pages. The gate runs on every example page in both themes inside the existing
+overflow check, so the report still has 52 checks. Fixing what it found touched
+seven existing pages and the two shared template stylesheets.
+
+---
+
 ### `v3.0.0`
 
 **2,144 design systems, fetched when you use one. Gemini CLI and Antigravity.

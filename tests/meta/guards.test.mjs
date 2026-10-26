@@ -20,7 +20,7 @@ const BROWSER_GATES = readdirSync(join(ROOT, 'scripts'))
 
 test('every browser gate is accounted for', () => {
   // If a new render gate lands, it must be covered by the guard below.
-  assert.equal(BROWSER_GATES.length, 15, `browser gates changed: ${BROWSER_GATES.join(', ')}`);
+  assert.equal(BROWSER_GATES.length, 16, `browser gates changed: ${BROWSER_GATES.join(', ')}`);
 });
 
 test('a missing browser fails loudly under DS_REQUIRE_BROWSER, and only skips without it', () => {
@@ -88,7 +88,7 @@ test('every render gate REFUSES a missing path, rather than crashing into one', 
     'verify_target_size.mjs', 'verify_overflow.mjs', 'verify_interactive.mjs',
     'lint_intent.mjs', 'verify_reduced_motion.mjs', 'verify_rtl.mjs', 'slop_tells.mjs',
     'taste_audit.mjs', 'verify_responsive.mjs', 'verify_mobile_first.mjs',
-    'verify_focustrap.mjs',
+    'verify_focustrap.mjs', 'verify_spacing.mjs',
   ];
   for (const g of RENDER_GATES) {
     const r = node(g, ['tests/fixtures/nope.html'], { env: { DS_REQUIRE_BROWSER: '1' } });

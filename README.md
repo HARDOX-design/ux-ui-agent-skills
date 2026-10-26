@@ -58,9 +58,10 @@ Not a mockup. These are screenshots of the files in `examples/`, taken by
 what you see below is what the gate run passed, in both themes.
 
 **Click through them yourself: [plugin87.github.io/ux-ui-agent-skills](https://plugin87.github.io/ux-ui-agent-skills/).**
-There are 50 live pages (twenty whole-product screens, every component harness,
-both reference screens and an iPhone Duo simulator), with a theme toggle. No
-install, no clone.
+There are 56 live pages (twenty whole-product screens, five websites from a
+product launch to a Thai public service page, every component harness, both
+reference screens and an iPhone Duo simulator), with a theme toggle. No install,
+no clone.
 
 <img src=".github/images/dashboard-light.png" alt="Atlas revenue console in light theme: sidebar navigation, a hero net-recurring-revenue figure at 2.48 million with a weekly bar chart, retention and churn cards, a donut of revenue by plan, an account ranking, regional sparklines, a sortable renewals table and an activity feed" />
 

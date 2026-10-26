@@ -73,7 +73,7 @@ main{display:flex;flex-direction:column;min-inline-size:0}
    push the page sideways. */
 @media (max-width:30rem){
   .panel{padding:var(--space-4)}
-  .panel > header{flex-direction:column;align-items:flex-start;gap:var(--space-1)}
+  .panel > header{flex-direction:column;align-items:flex-start;gap:var(--space-2)}
 }
 /* A row is as tall as its tallest panel, and align-content:start packs the short
    one's content to the top - so it ends in a bordered void. A panel in a row has

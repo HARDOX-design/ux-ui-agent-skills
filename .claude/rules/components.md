@@ -97,6 +97,33 @@ same height in the rendered page.
 
 ---
 
+## Spacing: rows, gaps and gutters
+
+Three rules a reviewer sees at a glance and no colour or contrast gate measures.
+`node scripts/verify_spacing.mjs <file|dir>` measures the first two on the render.
+
+1. **Cards that share a row share a height.** Two channel cards, three plan tiles,
+   a pipeline of columns: if they sit side by side, they end on the same line. A
+   grid or flex row stretches its items by default, so the bug is almost always an
+   `align-items:start` someone added. Remove it, and push a card's last line (a
+   note, an action) to its bottom edge so the endings align too. An item that
+   deliberately spans two rows (a bento lead tile) is the exception.
+2. **Nothing touches.** A button, a field, a badge or a card keeps at least
+   `--space-2` (8px) from the thing next to it, stacked or side by side, and that
+   includes what happens when a row wraps on a phone: a badge that drops under its
+   heading needs a `row-gap`, not luck. Two exceptions, both deliberate: a label sits
+   `--space-1` (4px) from its own control, and the segments of one control (a
+   segmented button, a stepper's minus, value and plus) may join inside the box that
+   draws them as one thing.
+3. **Gaps and gutters are consistent.** Every gap comes from the spacing scale, and
+   one relationship gets one gap: if two cards in this grid are 24px apart, every card
+   in every grid like it is 24px apart, and a label sits the same distance from its
+   field on every form. The page has one gutter: section content starts on the same
+   left edge from the masthead to the footer, and a band that breaks out to full
+   width brings its content back to that edge.
+
+---
+
 ## Narrow-width defences (the four causes that actually bite)
 
 A layout that fits at 280px on one machine can overflow on another, because font

@@ -83,6 +83,18 @@ test('verify_keyboard rejects an interactive role Tab can never reach', () => {
   rejects(gate('verify_keyboard.mjs', [F('bad/div-button-no-tabindex.html')]), /A0 no tab stop/);
 });
 
+test('verify_spacing rejects unequal cards in a row, text on its buttons, and buttons 4px apart', () => {
+  const r = rejects(gate('verify_spacing.mjs', [F('bad/spacing.html')]), /verify_spacing: FAIL/);
+  // Each of the three defects, not whichever one still happens to be caught.
+  for (const want of [/\[A unequal row\]/, /\[B touching\]  stacked .*p\.address/, /\[B touching\]  side by side 4\.0px/]) {
+    if (!want.test(r.out)) throw new Error(`missed ${want}\n${r.out}`);
+  }
+});
+
+test('verify_spacing accepts the deliberate exceptions: a label 4px from its field, joined segments, a lead tile spanning rows', () => {
+  accepts(gate('verify_spacing.mjs', [F('good/spacing.html')]), /rows of cards share a height, nothing touches/);
+});
+
 test('verify_overflow rejects silently clipped text', () => {
   rejects(gate('verify_overflow.mjs', [F('bad/clipped.html')]), /clipped/);
 });
@@ -150,6 +162,7 @@ const ACCEPTS = [
   ['verify_keyboard',             'verify_keyboard.mjs',     [CLEAN]],
   ['verify_reduced_motion',       'verify_reduced_motion.mjs', [CLEAN]],
   ['verify_overflow',             'verify_overflow.mjs',     [CLEAN]],
+  ['verify_spacing',              'verify_spacing.mjs',      [CLEAN]],
   ['lint_intent',                 'lint_intent.mjs',         [CLEAN]],
   ['verify_interactive',          'verify_interactive.mjs',  [CLEAN]],
   ['verify_rtl',                  'verify_rtl.mjs',          [CLEAN]],

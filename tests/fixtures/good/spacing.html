@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>spacing done right</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; background:#ffffff; color:#1d1d1f; font:16px/1.5 system-ui, sans-serif; }
+  main { padding:24px; display:grid; gap:32px; }
+  /* The other half of the pair. verify_spacing.mjs must accept every one of these:
+     cards in a row share a height; text sits clear of its buttons; buttons are
+     8px apart; a label sits 4px from its own field; the segments of one control
+     join inside the box that draws them; a lead tile spans two grid rows. */
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { border:1px solid #d0d5d9; border-radius:12px; padding:16px; }
+  .address { margin:0 0 16px; }
+  .actions { display:flex; gap:8px; }
+  button { font:inherit; padding:8px 16px; border:1px solid #868d93; border-radius:8px; background:#ffffff; }
+  .field { display:grid; gap:4px; }
+  input { font:inherit; padding:8px; border:1px solid #868d93; border-radius:8px; }
+  .seg { display:inline-flex; border:1px solid #868d93; border-radius:8px; padding:2px; gap:2px; }
+  .seg button { border:0; padding:6px 12px; }
+  .bento { display:grid; grid-template-columns:2fr 1fr; gap:16px; }
+  .bento .lead { grid-row:span 2; }
+</style></head>
+<body><main>
+  <div class="row">
+    <article class="card"><h2>At the office</h2><p>Monday to Friday, 08:30 to 16:30.</p><p>Saturday, 09:00 to 12:00.</p></article>
+    <article class="card"><h2>By post</h2><p>Send the form and copies.</p></article>
+  </div>
+  <section>
+    <p class="address">27 Tamarind Lane</p>
+    <div class="actions"><button type="button">Copy address</button><button type="button">Email us</button></div>
+  </section>
+  <div class="field"><label for="name">Name for the booking</label><input id="name" type="text"></div>
+  <div class="seg" role="group" aria-label="Text size"><button type="button" aria-pressed="true">Small</button><button type="button" aria-pressed="false">Large</button></div>
+  <div class="bento">
+    <article class="card lead"><h2>Tuning</h2><p>The lead tile spans both rows.</p></article>
+    <article class="card"><h2>Charging</h2><p>65 W over one cable.</p></article>
+    <article class="card"><h2>Mute</h2><p>Hold the dial for a second.</p></article>
+  </div>
+</main></body></html>

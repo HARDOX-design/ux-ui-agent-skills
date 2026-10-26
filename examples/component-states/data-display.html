@@ -39,7 +39,7 @@
   .cbtn:hover{background:var(--color-surface-raised)}
   .cbtn:focus-visible{outline:none;box-shadow:var(--shadow-focus-ring)}
   .cbtn svg{inline-size:1.1rem;block-size:1.1rem;color:currentColor;fill:none;stroke-width:2}
-  .dots{display:flex;gap:var(--space-1)}
+  .dots{display:flex;gap:var(--space-2)}
   .dot{inline-size:1.5rem;block-size:1.5rem;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center;border-radius:var(--radius-full);color:var(--color-border-strong)}
   .dot::before{content:"";inline-size:.55rem;block-size:.55rem;border-radius:var(--radius-full);background:currentColor;transition:background var(--transition-micro)}
   .dot[aria-current="true"]{color:var(--color-text-link)}
@@ -62,7 +62,7 @@
     border:1px solid var(--color-border-default);border-block-start:0;border-radius:0 0 var(--radius-card) var(--radius-card);
     padding:var(--space-3) var(--space-4);background:var(--color-surface-card)}
   .gcap{font-size:var(--text-sm);font-weight:500}
-  .gdots{display:flex;gap:var(--space-1)}
+  .gdots{display:flex;flex-wrap:wrap;gap:var(--space-2)}
   /* divider */
   .stack{display:grid;gap:var(--space-4);max-inline-size:21.25rem}
   hr.div{border:0;border-block-start:1px solid var(--color-border-default);margin:0}

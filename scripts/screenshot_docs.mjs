@@ -16,6 +16,9 @@
  *                                                 # README references exists, and
  *                                                 # nothing in the folder is orphaned
  *
+ *   node scripts/screenshot_docs.mjs --only=a.png,b.png   # just these images;
+ *                                                 # the rest stay byte for byte
+ *
  * --check is what CI runs. It cannot prove a shot is CURRENT (a PNG diff across
  * Chrome versions is noise, not signal), only that the set is complete and that
  * no image sits there unreferenced. Re-run without --check after any visual
@@ -80,6 +83,12 @@ const THUMBS = [
   ['examples/templates/trial.html',    'tpl-trial.png',       'light', [1200, 760]],
   ['examples/templates/training.html', 'tpl-training.png',    'dark',  [1200, 760]],
   ['examples/templates/weather.html',  'tpl-weather.png',     'dark',  [1200, 760]],
+  // The five websites, so the front door shows more than dashboards.
+  ['examples/sites/launch/index.html',  'site-launch.png',     'light', [1200, 760]],
+  ['examples/sites/store/index.html',   'site-store.png',      'light', [1200, 760]],
+  ['examples/sites/journal/index.html', 'site-journal.png',    'light', [1200, 760]],
+  ['examples/sites/local/index.html',   'site-local.png',      'light', [1200, 760]],
+  ['examples/sites/gov/index.html',     'site-gov.png',        'light', [1200, 760]],
   // The before/after pair on the front door. Same viewport, same theme, no
   // fullPage. A comparison slider is a lie if the two halves are not the same
   // frame, and these two were 1280x1140 against 1280x1500. Matching them is only
@@ -135,7 +144,13 @@ function check() {
   console.log('OK: every declared shot exists, every README image resolves, nothing orphaned.');
 }
 
+/* Re-rendering every image to add one rewrites them all: Chrome versions move
+   antialiasing, and a commit fills with binary noise nobody asked for. */
+const ONLY = (process.argv.find(a => a.startsWith('--only=')) || '').slice('--only='.length).split(',').filter(Boolean);
+const wanted = (name) => !ONLY.length || ONLY.includes(name);
+
 async function shoot() {
+  let docs = 0, thumbs = 0;
   let chromium;
   try { ({ chromium } = await import('playwright')); }
   catch {
@@ -145,6 +160,7 @@ async function shoot() {
   mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch({ channel: 'chrome' });
   for (const [src, name, theme, [width, height], fullPage] of SHOTS) {
+    if (!wanted(name)) continue;
     const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1.5 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('file://' + join(ROOT, src));
@@ -153,10 +169,12 @@ async function shoot() {
     await page.waitForTimeout(250);
     await page.screenshot({ path: join(OUT, name), fullPage });
     await page.close();
+    docs++;
     console.log(`  ${name}  <- ${src} (${theme})`);
   }
   mkdirSync(THUMB_DIR, { recursive: true });
   for (const [src, name, theme, [width, height]] of THUMBS) {
+    if (!wanted(name)) continue;
     const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('file://' + join(ROOT, src));
@@ -165,14 +183,17 @@ async function shoot() {
     await page.waitForTimeout(250);
     await page.screenshot({ path: join(THUMB_DIR, name), fullPage: false });
     await page.close();
+    thumbs++;
     console.log(`  thumbs/${name}  <- ${src} (${theme})`);
   }
   await browser.close();
   for (const [src, name] of COPIES) {
+    if (!wanted(name)) continue;
     copyFileSync(join(ROOT, src), join(OUT, name));
+    docs++;
     console.log(`  ${name}  <- ${src} (copied)`);
   }
-  console.log(`\nWrote ${SHOTS.length + COPIES.length} image(s) to .github/images/ and ${THUMBS.length} to examples/thumbs/.`);
+  console.log(`\nWrote ${docs} image(s) to .github/images/ and ${thumbs} to examples/thumbs/.`);
   console.log('Now LOOK at them before committing.');
 }
 
