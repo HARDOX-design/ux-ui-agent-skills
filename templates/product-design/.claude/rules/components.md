@@ -93,6 +93,15 @@ with no positioned ancestor resolves against the initial containing block, so in
 a horizontal scroller it lands outside the viewport and inflates the document's
 scroll width. Give it a positioned ancestor.
 
+## Foldables
+
+iPhone Duo gives Safari five viewports: 382, 385, 594, 669 and 951px wide. The
+gate tests all five. One layout across the fold is fine, and it is what most
+visitors see, since Safari keeps the fold APIs behind feature flags. If a screen
+does change when the phone folds (`@media (horizontal-viewport-segments: 2)`),
+give each pane one segment, make the gap the hinge, and put nothing readable or
+tappable on it. The gate fails a fold-aware page that does.
+
 ## Before you call it done
 
 ```

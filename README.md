@@ -6,14 +6,14 @@
 
 ### Design-system doctrine for coding agents, and **52 gates** that check what they build instead of taking their word for it.
 
-A comprehensive kit of structured instructions, design tokens, runnable skills, and 2,144 design systems (2,087 of them measured from the live site) that turn Claude into a UX/UI expert agent, targeting **any framework** and **any design system**. Drop it into any project for consistent, accessible, token-driven design outputs, every time.
+Instructions, design tokens, 26 runnable skills and 2,144 design systems (2,087 of them measured from the live site) that make a coding agent design to a senior standard, in **any framework** and against **any design system**. Then the gates measure what it built.
 
 <br>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/brand/xias-cover-dark.png">
   <source media="(prefers-color-scheme: light)" srcset=".github/brand/xias-cover-light.png">
-  <img src=".github/images/hero.png" alt="XIAS - design-system doctrine for coding agents. 52 objective gates, 34 of which open a real browser: WCAG contrast in every state, axe roles and landmarks, keyboard, target size, reduced motion, no horizontal overflow at 280, token by intent, screen economy. 2,144 design systems, 52 component specs, 26 runnable skills, 14 DTCG token files, 16 framework adapters. Claude Code, Codex, Cursor, Copilot, Gemini CLI, Antigravity, Aider, MCP." width="900">
+  <img src=".github/images/hero.png" alt="XIAS: design-system doctrine for coding agents. 52 objective gates, 34 of which open a real browser: WCAG contrast in every state, axe roles and landmarks, keyboard, target size, reduced motion, no horizontal overflow at 280, token by intent, screen economy. 2,144 design systems, 52 component specs, 26 runnable skills, 14 DTCG token files, 16 framework adapters. Claude Code, Codex, Cursor, Copilot, Gemini CLI, Antigravity, Aider, MCP." width="900">
 </picture>
 
 <br>
@@ -57,9 +57,10 @@ Not a mockup. These are screenshots of the files in `examples/`, taken by
 `node scripts/screenshot_docs.mjs` from the same HTML the 52 gates measure, so
 what you see below is what the gate run passed, in both themes.
 
-**Click through them yourself: [plugin87.github.io/ux-ui-agent-skills](https://plugin87.github.io/ux-ui-agent-skills/)**:
-49 live pages: twenty whole-product screens, every component harness, both
-reference screens, with a theme toggle. No install, no clone.
+**Click through them yourself: [plugin87.github.io/ux-ui-agent-skills](https://plugin87.github.io/ux-ui-agent-skills/).**
+There are 50 live pages (twenty whole-product screens, every component harness,
+both reference screens and an iPhone Duo simulator), with a theme toggle. No
+install, no clone.
 
 <img src=".github/images/dashboard-light.png" alt="Atlas revenue console in light theme: sidebar navigation, a hero net-recurring-revenue figure at 2.48 million with a weekly bar chart, retention and churn cards, a donut of revenue by plan, an account ranking, regional sparklines, a sortable renewals table and an activity feed" />
 
@@ -67,10 +68,10 @@ reference screens, with a theme toggle. No install, no clone.
 
 <img src=".github/images/terminal-dark.png" alt="Meridian Terminal: a trading desk screen with a market ticker, candlestick chart with volume and moving average, order book with depth bars, cumulative depth curve, time and sales tape, watchlist sparklines, stacked area allocation, waterfall attribution, bubble chart and a correlation matrix" />
 
-**Meridian Terminal** is the density test: **ten chart types on one screen** -
+**Meridian Terminal** is the density test: **ten chart types on one screen**:
 candlestick, volume, moving average, depth, order book, tape, sparklines,
-stacked area, waterfall, bubble and a correlation matrix - every one of them
-inline SVG drawn from the same tokens, no chart library.
+stacked area, waterfall, bubble and a correlation matrix. Every one of them is
+inline SVG drawn from the same tokens, with no chart library.
 [Open it live.](https://plugin87.github.io/ux-ui-agent-skills/terminal/)
 Build one yourself with **`/data-dashboard`**.
 
@@ -101,7 +102,7 @@ instead of borrowing the disabled dimming. Every one of those is a rule in
 ## What the gates actually catch
 
 
-Left: the same dashboard written the way a model writes it when nothing stops it -
+Left: the same dashboard written the way a model writes it when nothing stops it:
 the indigo-to-purple gradient, four equal cards with no focal point, emoji as
 icons, one radius and one shadow everywhere, grey-on-white body text, and a blue
 Delete Account. Right: the reference app in this repo.
@@ -118,15 +119,15 @@ left is `tests/fixtures/bad/slop-screen.html`; here is what the gates say about 
 
 | Gate | Verdict on the left-hand page |
 |---|---|
-| REAL-render WCAG | `x <h1> "Analytics Dashboard" 1.00:1 (need 3)` - white text on a gradient has no measurable background |
-| State-aware WCAG | `x default "Save Changes" 1.00:1 (need 4.5) [rgb(255,255,255) on rgb(255,255,255)]` - 6 states below AA |
+| REAL-render WCAG | `x <h1> "Analytics Dashboard" 1.00:1 (need 3)`: white text on a gradient has no measurable background |
+| State-aware WCAG | `x default "Save Changes" 1.00:1 (need 4.5) [rgb(255,255,255) on rgb(255,255,255)]`: 6 states below AA |
 | Target size (2.5.8) | `x button.icon-btn is 15.3x16 (min 24x24)` |
 | Responsive | `x @280px overflow +820px (widest: div.card)` |
 | axe-core | `SERIOUS target-size` |
 | Slop tells | HIGH: hardcoded indigo-purple gradient, single radius, one flat shadow, `#000` on `#fff` |
 | Taste audit | HIGH: biggest heading 24px vs 14px body = 1.7x, not a display scale |
 | Token by intent | `x "Delete Account" is destructive but filled with rgb(99, 102, 241) (hue 239deg, not a danger colour)` |
-| No emoji | `x slop-screen.html:55: emoji/pictograph` - a chart glyph in the `<h1>` |
+| No emoji | `x slop-screen.html:55: emoji/pictograph`: a chart glyph in the `<h1>` |
 | No hardcoded values | `FAIL: 63 hardcoded value(s)` |
 
 Ten gates reject it, none of them on a matter of taste. The right-hand page
@@ -137,7 +138,7 @@ The last row is there because building this comparison broke a gate open.
 "primary" and "danger" from the page's own CSS variables, and a page with no
 tokens resolved neither, so it skipped the page and reported zero intent-bearing
 controls. An untokenised page is precisely where intent gets picked by
-convenience, so the gate no longer looks away - a destructive label filled with a
+convenience, so the gate no longer looks away: a destructive label filled with a
 saturated colour outside the danger hue range is wrong-intent with or without a
 theme. Re-checked against every example in both themes afterwards: no false
 positives.
@@ -392,7 +393,7 @@ silence as green. Every skill already does.
 
 Token validity, WCAG contrast on a real headless render in light *and* dark, every
 element in default/hover/focus, axe roles and names, focus traps, RTL, responsive
-at 280/320/414, target size, keyboard operability, reduced motion (including
+from 280 to 951px and folded on iPhone Duo, target size, keyboard operability, reduced motion (including
 content that only an animation reveals), silent text clipping, token-by-intent,
 and zero emoji anywhere in the output or the instruction surface.
 
@@ -407,7 +408,7 @@ destructive-intent declarations in framework source.
 
 The split is not typed here: `tests/meta/counts.test.mjs` derives it from which
 gates import Playwright and fails if this paragraph drifts from the report. It
-read 35/16 until 2026-10-07, when the derivation was first run - two numbers
+read 35/16 until 2026-10-07, when the derivation was first run. Those were two numbers
 nobody had measured, in the section about not stating numbers you did not
 measure.
 
@@ -506,7 +507,7 @@ What transfers, and what does not, stated exactly:
 | | Claude Code | AGENTS.md surface | Gemini CLI, Antigravity |
 |---|---|---|---|
 | Tokens, components, taste, accessibility, 2,144 design systems | yes | **yes** | **yes** |
-| All 52 gates | yes | **yes** - they are plain Node and Python | **yes** |
+| All 52 gates | yes | **yes**, they are plain Node and Python | **yes** |
 | Doctrine: the eight states, token by intent, mobile-first, the house rules | yes | **yes** | **yes**, in `GEMINI.md` |
 | 26 skills that load on demand | yes | no, the doctrine is inlined instead | 23 ported skills |
 | Hooks that fire whether or not the model remembers | yes | **no** | **no** |
@@ -541,7 +542,7 @@ Two commands are the whole bar for anything that does ship:
 `npm run test:gates` (every gate must still reject its broken fixture). Paste
 the real output rather than describing it.
 
-The most valuable issue this repo can receive is a **gate gap** - a case where a
+The most valuable issue this repo can receive is a **gate gap**: a case where a
 gate said yes to work it should have caught. There is a template for exactly
 that, because a gate that passes broken work is worse than a missing one: it
 turns a real defect into a green tick.
@@ -555,7 +556,7 @@ add a gate that can still say no, and the SemVer table.
 ## License
 
 
-Released under the **[MIT License](LICENSE)** - free to use, modify, and
+Released under the **[MIT License](LICENSE)**: free to use, modify, and
 distribute, including commercially, as long as the copyright notice and the
 permission notice travel with the copy.
 

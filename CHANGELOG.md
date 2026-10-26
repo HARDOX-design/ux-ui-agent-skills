@@ -54,7 +54,7 @@ project, which may not have moved yet. The same table is in
   `library pull`. The fetch tries GitHub raw first, then jsDelivr. A spec whose
   bytes do not match the index is refused and nothing is written.
 - **Package size.** Measured with `npm pack --dry-run`, the 3.0.0 package is
-  3,870,316 bytes packed and 6,095,980 unpacked, in 282 files. 2.10.0, as the
+  3,880,585 bytes packed and 6,129,907 unpacked, in 283 files. 2.10.0, as the
   registry reports it, was 6,401,000 bytes unpacked in 416 files, and it carried
   138 specs.
 - **MCP server.** `get_design_system` lists from the index. Run from npm, it
@@ -105,6 +105,39 @@ record, and the fixture whose dash is the defect under test. Pointed at your own
 project, it now fails on a dash in any file there (Markdown, JSON, CSS), not only
 in UI files. The fast-gate hook hands it UI files only, as before, so what the
 hook catches has not changed.
+
+**iPhone Duo.** Safari gives a page on iPhone Duo one of five viewports, which
+WebKit published for Safari 27.1: 382, 385, 594, 669 and 951px wide.
+- **Widths.** `verify_responsive.mjs` now tests all five by default, beside
+  280, 320 and 414. Nothing checked 594 to 951 before, which is where a layout
+  grows from one column to two. Every example passed at all five, at 1x and at a
+  1.25x root font, before anything was changed.
+- **The fold.** The gate also renders each page at 951x620 half closed: two
+  viewport segments, with a 40px hinge at 455 to 495px, emulated in Chrome. The
+  hinge band was measured by a third party in Apple's simulator; Apple does not
+  publish it. A page whose layout does not change when the fold appears is left
+  alone, because Safari keeps the fold APIs behind feature flags and one layout
+  across the hinge is what most visitors get. A page whose layout does change
+  has claimed to know where the hinge is, and fails if any text or control sits
+  on it.
+- **How the gate decides.** Text and controls scrolled out of an ancestor's box
+  do not count, because they are not on screen. A page whose layout differs
+  between two identical loads is reported as one the fold could not be judged
+  on, rather than passed.
+- **An example that answers the fold.** `examples/templates/crm.html` now puts
+  the pipeline on one segment and the selected deal on the other, with the gap
+  between them set to the hinge.
+- **A simulator.** `examples/foldable/index.html` shows the template in all six
+  poses: closed upright, closed on its side, open upright, open on its side, two
+  windows, and half closed. Each pose is the real page in an iframe at its exact
+  CSS width. A desktop browser has no fold to report, so in the half-closed pose
+  the page is told where the fold is through the URL, and runs the same layout
+  Safari would. The simulator is gated with the front door, which keeps the
+  report at 52 checks.
+- **Rules.** `.claude/rules/components.md` has a new section, "Foldables: iPhone
+  Duo", and the starter template carries a short version of it.
+- **Not proven.** The fold is emulated in Chrome, not Safari, and only the book
+  pose on its side is tested. Nothing here ran on a real iPhone Duo.
 
 **The README header cannot be overwritten by the screenshot script.**
 `screenshot_docs.mjs` still rendered the old `cover.html` into `hero.png`, the

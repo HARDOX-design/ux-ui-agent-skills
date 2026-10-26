@@ -31,7 +31,7 @@ This governs every build/review from the **start**, not the end. Trust comes fro
 3. **Run the one-command gate before reporting done:** `node scripts/accuracy_report.mjs` (= tokens + contrast + spec + no-hardcode + theme-refs + no-emoji + real-render WCAG + state-aware, light & dark). Report the actual `N/N` line. It is all-or-nothing.
 4. **Build with the gates, not after.** Generate against the rules, then gate; if a gate fails, fix and re-run until green. Do not announce success between failures.
 5. **Render and LOOK: gates don't prove pixels.** The contrast/axe gates pass while the UI is still visibly broken: a checkbox that won't toggle, a dash stuck at the bottom of its box, a checkmark and dash of mismatched weight, an answer panel showing a grey "band", unequal widths, no expand animation. For any component, screenshot the harness (transitions off, pointer parked off it) and inspect every state AND after interaction, and click each control to assert the state actually changed. See `design-component` skill → "RENDER AND LOOK".
-6. **Responsive is gated too.** `node scripts/verify_responsive.mjs <file|dir>`: no horizontal overflow at 280/320/414px. Mobile-first; a fixed-px width that can't shrink is a bug.
+6. **Responsive is gated too.** `node scripts/verify_responsive.mjs <file|dir>`: no horizontal overflow from 280 to 951px, iPhone Duo's five viewports included, and a page that answers the fold keeps the hinge clear. Mobile-first; a fixed-px width that can't shrink is a bug.
 7. **Honest scope.** These gates prove *objective correctness* (token-consistency, accessibility, no drift). They do **not** prove subjective taste/beauty. Say so, and never claim auto-100% on aesthetics. For the half no script can score, run **`/critique`** (the adversarial `design-critic` reviewer: renders it, argues for rejection, cites evidence per finding) alongside `scripts/taste_audit.mjs` + `scripts/slop_tells.mjs` and a human read. A passing gate is never evidence of taste.
 
 8. **A render gate with no browser prints SKIPPED and exits 0.** That is not a pass,
@@ -284,7 +284,7 @@ scripts/                  ← validate_tokens.py [file|dir] · contrast.py · va
                               always-on in CLAUDE.md; every .claude/rules file is routed; brief stays short)
                             · validate_template.py (the starter template: layout complete, aliases
                               resolve, seeded theme passes WCAG light AND dark before a project starts)
-                            · verify_responsive.mjs (no horizontal overflow at 280/320/414px, every harness;
+                            · verify_responsive.mjs (no horizontal overflow at 280 to 951px, every harness, then iPhone Duo folded;
                               --scale=1.25 stresses it with a wider root font: another platform's fallback
                               font or a user's larger text size, which is how a 280px layout breaks in CI)
                             · taste_audit.mjs (render-based taste signal: type-scale, uniform repetition, measure, palette)

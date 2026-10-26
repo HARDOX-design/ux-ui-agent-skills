@@ -41,7 +41,7 @@ and it counts as a result rather than as cheating.
    ```
 
    Fifteen objective gates on the real render: hardcodes, emoji, WCAG in light
-   and dark, state-aware contrast, axe, responsive at 280/320/414, the same widths
+   and dark, state-aware contrast, axe, responsive from 280 to 951px (iPhone Duo included), the same widths
    again under a 1.25x root font (a wider fallback font on another platform, or a
    user with larger text), target size, keyboard, reduced motion, content overflow,
    token by intent, slop tells, and interactive truth - a control that declares

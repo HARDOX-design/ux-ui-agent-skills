@@ -122,6 +122,58 @@ everything visible sits inside it. Give the span a positioned ancestor.
 
 ---
 
+## Foldables: iPhone Duo
+
+A page on iPhone Duo gets one of five viewports. WebKit published them for
+Safari 27.1, in CSS px:
+
+| Screen and pose | Width |
+|---|---|
+| Outer screen, upright | 382 |
+| Inner screen, two windows side by side (each) | 385 |
+| Outer screen, on its side | 594 |
+| Inner screen, upright | 669 |
+| Inner screen, on its side | 951 |
+
+1. **382 and 385 are phone widths.** A mobile-first base already covers them.
+   594 to 951 is where a layout grows from one column to two, and where it breaks
+   when a breakpoint lands between them. Test all five.
+2. **One layout across the hinge is the default, and it is fine.** Safari 27.1
+   ships the Device Posture and Viewport Segments APIs behind feature flags, so
+   most visitors see one viewport across the fold. Never make the fold a
+   requirement for the page to work.
+3. **If you answer the fold, answer it all the way.** Once the layout changes
+   when the screen folds, the page has claimed to know where the hinge is.
+   Then give each pane exactly one segment, make the gap between them the hinge,
+   and put nothing readable or tappable on it. Every `env()` keeps a fallback
+   that is the unfolded layout:
+
+```css
+@media (horizontal-viewport-segments: 2) {
+  .split {
+    grid-template-columns: env(viewport-segment-width 0 0, 1fr) env(viewport-segment-width 1 0, 1fr);
+    column-gap: calc(env(viewport-segment-left 1 0, 0px) - env(viewport-segment-right 0 0, 0px));
+  }
+}
+```
+
+4. **Detect the feature, never the device.** The media query and
+   `window.viewport.segments` say what the screen is doing; a user agent string
+   does not.
+5. **List and detail is the natural split.** The list on one segment, the
+   selected item on the other. A three-column layout spread over two segments
+   puts its middle column on the hinge.
+
+`node scripts/verify_responsive.mjs <file|dir>` tests the five widths by default,
+then renders the page at 951x620 half closed, with a 40px hinge at 455 to 495px
+(the band a third party measured in Apple's simulator; Apple does not publish
+it). A page that does not react to the fold passes that step untouched. A page
+that does react fails if any text or control sits on the hinge. The fold is
+emulated in Chrome, not Safari, and only the book pose on its side is tested:
+check a real device when you can.
+
+---
+
 ## Component Guidelines
 
 ### Component Quality Bar

@@ -47,6 +47,30 @@ test('verify_responsive rejects horizontal overflow at 280px', () => {
   rejects(gate('verify_responsive.mjs', [F('bad/overflow-280.html')]), /@280px overflow/);
 });
 
+test('verify_responsive rejects a fold-aware page that puts text and a control on the hinge', () => {
+  // iPhone Duo half closed: the page splits into three columns when it sees two
+  // viewport segments, and the middle one lands on the 455-495px hinge.
+  const r = rejects(gate('verify_responsive.mjs', [F('bad/fold-hinge.html')]), /fold-aware, yet \d+ thing\(s\) sit on the hinge/);
+  if (!/control button/.test(r.out)) throw new Error(`the button on the hinge was not named\n${r.out}`);
+});
+
+test('verify_responsive accepts one pane per viewport segment, and counts the page as fold-aware', () => {
+  accepts(gate('verify_responsive.mjs', [F('good/fold-aware.html')]), /1 fold-aware page\(s\), hinge clear/);
+});
+
+test('verify_responsive leaves a page that does not answer the fold alone there', () => {
+  // One layout across the hinge is what Safari shows by default, so it is not a
+  // finding. clean-panel.html is that page; it must pass and count as 0.
+  accepts(gate('verify_responsive.mjs', [F('good/clean-panel.html')]), /0 fold-aware page\(s\)/);
+});
+
+test('verify_responsive checks the five iPhone Duo widths by default', () => {
+  const r = accepts(gate('verify_responsive.mjs', [F('good/clean-panel.html')]), /no horizontal overflow/);
+  for (const w of [382, 385, 594, 669, 951]) {
+    if (!new RegExp(`(?<!\\d)${w}(?!\\d)`).test(r.out)) throw new Error(`${w}px is not in the default widths\n${r.out}`);
+  }
+});
+
 test('verify_keyboard rejects a stateful control Enter and Space cannot operate', () => {
   rejects(gate('verify_keyboard.mjs', [F('bad/dead-key-toggle.html')]), /verify_keyboard: FAIL/);
 });

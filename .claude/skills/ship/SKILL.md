@@ -20,7 +20,7 @@ confirmation (no tag, no publish). This command verifies and drafts only.
 
 1. Quality gate (must be fully green before continuing):
    - `node ${CLAUDE_SKILL_DIR}/../../../scripts/accuracy_report.mjs`: report the real N/N.
-   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_responsive.mjs examples`: no overflow at 280/320/414.
+   - `node ${CLAUDE_SKILL_DIR}/../../../scripts/verify_responsive.mjs examples`: no overflow from 280 to 951px, hinge clear when folded.
    - `python3 ${CLAUDE_SKILL_DIR}/../../../scripts/check_no_emoji.py`: UI + taste + instruction surface.
    If anything fails, stop and fix; do not proceed to the checklist.
 

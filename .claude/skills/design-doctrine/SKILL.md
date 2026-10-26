@@ -29,8 +29,9 @@ then load the rule file for the territory you are actually in.
    announce success between failures.
 5. **Render and LOOK.** Gates pass while a UI is still visibly broken. Screenshot
    the harness in both themes, click every control, and confirm the state changed.
-6. **Responsive is gated too:** `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file|dir>` -
-   no horizontal overflow at 280/320/414px.
+6. **Responsive is gated too:** `node ${CLAUDE_SKILL_DIR}/../../../scripts/gate.mjs verify_responsive.mjs <file|dir>`:
+   no horizontal overflow from 280 to 951px, iPhone Duo included, and a hinge kept clear
+   by any page that answers the fold.
 7. **Honest scope.** The gates prove objective correctness. They never prove taste.
    For that, run `/critique`, look at the work yourself, and start from the taste
    preflight below rather than from default components.
