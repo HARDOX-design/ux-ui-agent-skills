@@ -19,7 +19,9 @@ a two-page shop, a long read in Thai, a neighbourhood restaurant and a Thai publ
 service page. Each takes its visual language from one design system in the
 library, every brand, person and figure on them is fictional and says so, and each
 page passes the same gates as every other example. The design critic reviewed all
-five and each was revised against its findings.
+five twice, and each was revised against both rounds of findings. The long read
+names no real city, river, flood or app, and each footer says in plain words what
+was tested.
 
 **Spacing is a rule, and a gate.** `.claude/rules/components.md` has a new section,
 "Spacing: rows, gaps and gutters", and `scripts/verify_spacing.mjs` measures the
@@ -35,6 +37,28 @@ critic, not the gate: both were tried on all 56 example pages and both failed go
 pages. The gate runs on every example page in both themes inside the existing
 overflow check, so the report still has 52 checks. Fixing what it found touched
 seven existing pages and the two shared template stylesheets.
+
+The design critic's second pass found two rows the gate let through, a tile held at
+the top of a row of product cards that draw no box of their own, so the rule now
+also compares a boxed card with a neighbour that carries a picture, and it reads
+rows inside lists. That found two more on the banking and logistics templates.
+
+**Thai text is a rule, and a gate.** `.claude/rules/typography-and-spacing.md` has
+a new section, "Thai text", and `scripts/verify_thai.mjs` checks every page with
+Thai on it:
+- **No compound or count split at a line end.** Chrome breaks Thai with ICU's
+  dictionary, which holds the parts of a compound and not the compound, so
+  ใบ / อนุญาต is a legal break to the browser. The gate knows a list of compounds,
+  the noun prefixes ความ, การ, ผู้ and ชาว, and numbers with their classifiers.
+  A name it does not know still needs a Thai reader.
+- **Lines far enough apart for Thai.** Measured in the page's loaded font: the room
+  a Thai line needs above (ที่, นี้) and below (ุ) may not reach the next line. The
+  first public service page set its heading at 1.3 in Sukhumvit Set; the ink
+  cleared by 12px and the critic still read the tone marks as part of the line
+  above. The gate fails that heading and passes the 1.48 it ships with.
+
+It runs inside the same overflow and spacing check, so the report still has 52
+checks.
 
 ---
 
