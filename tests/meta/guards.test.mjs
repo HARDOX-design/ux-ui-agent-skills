@@ -28,9 +28,9 @@ test('a missing browser fails loudly under DS_REQUIRE_BROWSER, and only skips wi
   // playwright, the state a clean CI runner or a fresh npx install is in.
   const dir = mkdtempSync(join(tmpdir(), 'ds-nobrowser-'));
   try {
-    // _targets.mjs travels with them: the gates import it, and a missing import
-    // would fail for the wrong reason and still look like the right answer.
-    copyFileSync(join(ROOT, 'scripts', '_targets.mjs'), join(dir, '_targets.mjs'));
+    // _targets.mjs and _color.mjs travel with them: the gates import them, and a
+    // missing import would fail for the wrong reason and still look like the right answer.
+    for (const helper of ['_targets.mjs', '_color.mjs']) copyFileSync(join(ROOT, 'scripts', helper), join(dir, helper));
     for (const g of BROWSER_GATES) {
       copyFileSync(join(ROOT, 'scripts', g), join(dir, g));
       const target = join(ROOT, 'examples', 'sample-app', 'preview.html');

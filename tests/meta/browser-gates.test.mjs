@@ -25,6 +25,23 @@ test('measure_render rejects text below 4.5:1 on the real render', () => {
   rejects(gate('measure_render.mjs', [F('bad/low-contrast.html')]), /2\.07:1|need 4\.5/);
 });
 
+test('measure_render reads an oklch colour as the colour it is', () => {
+  // The old parser read oklch(0.78 0 0) as rgb(0.78, 0, 0): every line 1.00:1,
+  // the heading included. The real grey is 2.01:1, and the black heading passes.
+  const r = rejects(gate('measure_render.mjs', [F('bad/oklch.html')]), /2\.0\d:1 \(need 4\.5\)/);
+  if (/<h1>/.test(r.out)) throw new Error(`the heading passes AA and was reported:\n${r.out}`);
+});
+
+for (const args of [[], ['--dark']]) {
+  const mode = args.length ? ' (dark)' : '';
+  test(`measure_render accepts a theme written in oklch${mode}`, () => {
+    accepts(gate('measure_render.mjs', [...args, F('good/oklch.html')]));
+  });
+  test(`verify_states accepts a theme written in oklch${mode}`, () => {
+    accepts(gate('verify_states.mjs', [...args, F('good/oklch.html')]));
+  });
+}
+
 test('verify_states rejects a button that only fails on hover', () => {
   // The specificity trap: fine at rest, broken on hover. measure_render alone misses it.
   const r = rejects(gate('verify_states.mjs', [F('bad/hover-fail.html')]), /hover/);

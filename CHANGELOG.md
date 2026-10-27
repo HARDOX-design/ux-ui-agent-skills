@@ -23,6 +23,21 @@ five twice, and each was revised against both rounds of findings. The long read
 names no real city, river, flood or app, and each footer says in plain words what
 was tested.
 
+**The contrast gates read oklch.** Chrome reports a computed colour in the syntax
+it was written in, and `measure_render.mjs` and `verify_states.mjs` pulled the
+numbers out of the string, so `oklch(0.2 0.014 30)` read as `rgb(0.2, 0.014, 30)`.
+A page whose theme is written in oklch, which every Tailwind v4 palette is, failed
+contrast everywhere: a live site checked against the kit came back with 364
+failures that were not there. `scripts/_color.mjs` paints each colour into one
+canvas pixel and reads it back, so oklch, oklab, lab, lch, `color()` and
+`color-mix()` all arrive as the sRGB the screen shows. `lint_intent.mjs`,
+`slop_tells.mjs` and `taste_audit.mjs` read colours through it too. A pair of oklch
+fixtures holds it: the old gates failed the good one on 6 lines and reported every
+line of the bad one as 1.00:1; the new ones pass the good page in light and dark
+and report the bad grey at its real 2.01:1. Reading colours right exposed one
+thing the misreading had hidden: `measure_render` measured `.sr-only` labels, which
+are clipped to 1px and have no contrast to meet, so it now skips them.
+
 **Spacing is a rule, and a gate.** `.claude/rules/components.md` has a new section,
 "Spacing: rows, gaps and gutters", and `scripts/verify_spacing.mjs` measures the
 two parts of it that can be measured on the render:
